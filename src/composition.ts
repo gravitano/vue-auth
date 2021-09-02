@@ -46,9 +46,9 @@ export const defaultOptions: AuthOptions = {
 };
 
 export const createAuth = (options = defaultOptions) => {
-  const token = ref<string | null>(storage.get(options.token.storageName));
-  const user = ref<AuthUser | null>(storage.get(options.token.storageName, null));
-  const loggedIn = ref<boolean>(!!token);
+  const token = ref<string | null>(storage.get(options.token.storageName, null));
+  const user = ref<AuthUser | null>(storage.get(options.user.storageName, null));
+  const loggedIn = ref<boolean>(!!token.value);
   const error = ref<string | null>(null);
   const loading = ref(false);
 
