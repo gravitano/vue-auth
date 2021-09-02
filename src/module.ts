@@ -1,7 +1,7 @@
-import { get } from '@frontend/helpers';
 import { AxiosInstance } from 'axios';
-import { AuthOptions, AuthStorage } from './types/index';
+import { AuthOptions, AuthStorage } from '../types';
 import { Module } from 'vuex'
+import get from 'lodash/get';
 
 export type RootState = Record<string, any>
 export interface AuthState {
