@@ -1,4 +1,4 @@
-import { MiddlewareParams } from '../types/index'
+import { MiddlewareParams } from '../../types/index'
 
 export const guestMiddleware = ({ loggedIn, next, options }: MiddlewareParams) => {
   if (loggedIn.value) {

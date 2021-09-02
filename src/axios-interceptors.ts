@@ -1,7 +1,7 @@
 
 import { AxiosInstance } from 'axios'
 import { storage } from './storage';
-import { AuthOptions } from './types/index';
+import { AuthOptions } from '../types/index';
 
 export const registerAxiosInterceptors = (axios: AxiosInstance, options: AuthOptions) => {
   axios.interceptors.request.use(

@@ -1,7 +1,7 @@
 import { inject, App } from 'vue';
 import { defaultOptions, createAuth } from './composition';
 import merge from 'lodash/merge';
-import { AuthOptions } from './types/index';
+import { AuthOptions } from '../types/index';
 
 export const injectAuth = () => inject('auth');
 

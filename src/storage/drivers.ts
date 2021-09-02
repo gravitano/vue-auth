@@ -1,6 +1,6 @@
 import { LocalStorage } from "./local"
 import { SecureLocalStorage } from "./secure-ls"
-import { AuthStorage } from '../types/index'
+import { AuthStorage } from '../../types/index'
 
 export const drivers = {
   local: LocalStorage,

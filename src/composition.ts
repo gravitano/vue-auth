@@ -4,7 +4,7 @@ import merge from 'lodash/merge';
 import get from 'lodash/get';
 import { registerAxiosInterceptors } from './axios-interceptors';
 import jwtDecode from 'jwt-decode';
-import { AuthOptions, AuthUser, LoginPayload } from './types/index';
+import { AuthOptions, AuthUser, LoginPayload } from '../types/index';
 import { storage } from './storage';
 import { RouteLocationNormalized, NavigationGuardNext } from 'vue-router';
 import { requiresAuthMiddleware, guestMiddleware } from './middleware';
