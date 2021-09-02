@@ -7,6 +7,6 @@ export const drivers = {
   secureLs: SecureLocalStorage
 }
 
-export const DEFAULT_DRIVER = 'secureLs'
+export const DEFAULT_DRIVER = 'local'
 
 export const storage: AuthStorage = new drivers[DEFAULT_DRIVER]
