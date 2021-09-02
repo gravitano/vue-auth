@@ -31,6 +31,9 @@ export function authModule<R>(
         state.isLoggedIn = true;
         state.user = user;
       },
+      setToken(state, token) {
+        state.token = token;
+      },
       logout(state) {
         state.user = null;
         state.isLoggedIn = false;

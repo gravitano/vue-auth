@@ -7,7 +7,8 @@ import jwtDecode from 'jwt-decode';
 import { AuthOptions, AuthUser, LoginPayload } from '../types/index';
 import { storage } from './storage';
 import { RouteLocationNormalized, NavigationGuardNext } from 'vue-router';
-import { requiresAuthMiddleware, guestMiddleware } from './middleware';
+import { requiresAuthMiddleware, guestMiddleware } from '../../../src/middleware/handler';
+import { Store } from 'vuex';
 
 export const defaultOptions: AuthOptions = {
   endpoints: {
@@ -45,9 +46,13 @@ export const defaultOptions: AuthOptions = {
   registerAxiosInterceptors: true,
 };
 
-export const createAuth = (options = defaultOptions) => {
-  const token = ref<string | null>(storage.get(options.token.storageName, null));
-  const user = ref<AuthUser | null>(storage.get(options.user.storageName, null));
+export const createAuth = <S>(store: Store<S>, options = defaultOptions) => {
+  const token = ref<string | null>(
+    storage.get(options.token.storageName, null),
+  );
+  const user = ref<AuthUser | null>(
+    storage.get(options.user.storageName, null),
+  );
   const loggedIn = ref<boolean>(!!token.value);
   const error = ref<string | null>(null);
   const loading = ref(false);
@@ -60,6 +65,8 @@ export const createAuth = (options = defaultOptions) => {
     user.value = userData;
     storage.set(options.token.storageName, userData);
 
+    store.commit('auth/setUser', userData);
+
     loggedIn.value = true;
 
     return user;
@@ -68,6 +75,8 @@ export const createAuth = (options = defaultOptions) => {
   const setToken = (tokenData: string) => {
     token.value = tokenData;
     storage.set(options.token.storageName, tokenData);
+
+    store.commit('auth/setToken', tokenData);
 
     return token;
   };
@@ -78,6 +87,8 @@ export const createAuth = (options = defaultOptions) => {
     loggedIn.value = false;
 
     storage.clear();
+
+    store.commit('logout');
 
     return Promise.resolve(true);
   };
@@ -90,6 +101,8 @@ export const createAuth = (options = defaultOptions) => {
         loading.value = false;
 
         await forceLogout();
+
+        store.commit('logout');
 
         return data;
       } catch (e) {
@@ -120,6 +133,10 @@ export const createAuth = (options = defaultOptions) => {
     }
   };
 
+  const setTokenHeader = (tokenData: string) => {
+    axios.defaults.headers[options.token.name] = `${options.token.type} ${tokenData}`;
+  }
+
   const login = async (payload: LoginPayload) => {
     try {
       loading.value = true;
@@ -135,7 +152,10 @@ export const createAuth = (options = defaultOptions) => {
       let tokenData = get(data, options.token.property);
       setToken(tokenData);
 
+      console.log(tokenData, options)
+
       if (options.user.autoFetch) {
+        setTokenHeader(tokenData)
         return await fetchUser();
       } else if (options.token.autoDecode) {
         const decoded: { user: AuthUser } = jwtDecode(tokenData);
@@ -149,7 +169,7 @@ export const createAuth = (options = defaultOptions) => {
       return data;
     } catch (e) {
       loading.value = false;
-      error.value = e.response.data?.message || e.message;
+      error.value = e.response?.data?.message || e.message;
 
       return e.response.data;
     }
@@ -164,25 +184,6 @@ export const createAuth = (options = defaultOptions) => {
     registerAxiosInterceptors(axios, options);
   });
 
-  const handleMiddleware = (
-    to: RouteLocationNormalized,
-    from: RouteLocationNormalized,
-    next: NavigationGuardNext,
-  ) => {
-    const middlewareParams = { to, from, next, loggedIn, options };
-    switch (to.meta.auth) {
-      case 'guest':
-        guestMiddleware(middlewareParams);
-        break;
-      case true:
-        requiresAuthMiddleware(middlewareParams);
-        break;
-      default:
-        next();
-        break;
-    }
-  };
-
   return {
     token,
     user,
@@ -194,7 +195,6 @@ export const createAuth = (options = defaultOptions) => {
     logout,
     login,
     forceLogout,
-    handleMiddleware,
     fetchUser,
   };
 };
