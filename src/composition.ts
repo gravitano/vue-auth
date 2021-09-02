@@ -1,57 +1,25 @@
-import { ref, watch } from 'vue';
+import {ref, watch} from 'vue';
 import axios from 'axios';
 import merge from 'lodash/merge';
 import get from 'lodash/get';
-import { registerAxiosInterceptors } from './axios-interceptors';
+import {registerAxiosInterceptors} from './axios-interceptors';
 import jwtDecode from 'jwt-decode';
-import { AuthOptions, AuthUser, LoginPayload } from '../types/index';
-import { storage } from './storage';
-import { RouteLocationNormalized, NavigationGuardNext } from 'vue-router';
-import { Store } from 'vuex';
-
-export const defaultOptions: AuthOptions = {
-  endpoints: {
-    login: {
-      url: '/auth/login',
-      method: 'post',
-    },
-    logout: {
-      url: '/auth/logout',
-      method: 'delete',
-    },
-    user: {
-      url: '/auth/me',
-      method: 'get',
-    },
-  },
-  token: {
-    property: 'data.token',
-    type: 'Bearer',
-    storageName: 'auth.token',
-    autoDecode: false,
-    name: 'Authorization',
-  },
-  user: {
-    autoFetch: true,
-    property: 'data',
-    storageName: 'auth.user',
-  },
-  moduleName: 'auth',
-  expiredStorage: 'auth.expired',
-  redirect: {
-    home: '/',
-    login: '/auth/login',
-  },
-  registerAxiosInterceptors: true,
-};
+import {AuthUser, LoginPayload} from '../types/index';
+import {storage} from './storage';
+import {Store} from 'vuex';
+import {defaultOptions} from './options';
 
 export const createAuth = <S>(store: Store<S>, options = defaultOptions) => {
-  const token = ref<string | null>(
-    storage.get(options.token.storageName, null),
+  const initialToken = storage.get<string | null>(
+    options.token.storageName,
+    null,
   );
-  const user = ref<AuthUser | null>(
-    storage.get(options.user.storageName, null),
+  const initialUser = storage.get<AuthUser | null>(
+    options.user.storageName,
+    null,
   );
+  const token = ref<string | null>(initialToken);
+  const user = ref<AuthUser | null>(initialUser);
   const loggedIn = ref<boolean>(!!token.value);
   const error = ref<string | null>(null);
   const loading = ref(false);
@@ -62,7 +30,7 @@ export const createAuth = <S>(store: Store<S>, options = defaultOptions) => {
 
   const setUser = (userData: AuthUser) => {
     user.value = userData;
-    storage.set(options.token.storageName, userData);
+    storage.set(options.user.storageName, userData);
 
     store.commit('auth/setUser', userData);
 
@@ -96,7 +64,7 @@ export const createAuth = <S>(store: Store<S>, options = defaultOptions) => {
     if (options.endpoints.logout) {
       try {
         loading.value = true;
-        const { data } = await axios.request(merge(options.endpoints.logout));
+        const {data} = await axios.request(merge(options.endpoints.logout));
         loading.value = false;
 
         await forceLogout();
@@ -118,7 +86,7 @@ export const createAuth = <S>(store: Store<S>, options = defaultOptions) => {
   const fetchUser = async () => {
     try {
       loading.value = true;
-      const { data } = await axios.request(merge(options.endpoints.user));
+      const {data} = await axios.request(merge(options.endpoints.user));
       loading.value = false;
 
       setUser(get(data, options.user.property));
@@ -133,15 +101,17 @@ export const createAuth = <S>(store: Store<S>, options = defaultOptions) => {
   };
 
   const setTokenHeader = (tokenData: string) => {
-    axios.defaults.headers[options.token.name] = `${options.token.type} ${tokenData}`;
-  }
+    axios.defaults.headers[
+      options.token.name
+    ] = `${options.token.type} ${tokenData}`;
+  };
 
   const login = async (payload: LoginPayload) => {
     try {
       loading.value = true;
       error.value = '';
 
-      const { data } = await axios.request(
+      const {data} = await axios.request(
         merge(options.endpoints.login, {
           data: payload,
         }),
@@ -151,14 +121,14 @@ export const createAuth = <S>(store: Store<S>, options = defaultOptions) => {
       let tokenData = get(data, options.token.property);
       setToken(tokenData);
 
-      console.log(tokenData, options)
+      console.log(tokenData, options);
 
       if (options.user.autoFetch) {
-        setTokenHeader(tokenData)
+        setTokenHeader(tokenData);
         return await fetchUser();
       } else if (options.token.autoDecode) {
-        const decoded: { user: AuthUser } = jwtDecode(tokenData);
-        const { user } = decoded;
+        const decoded: {user: AuthUser} = jwtDecode(tokenData);
+        const {user} = decoded;
 
         setUser(user);
 
@@ -195,5 +165,6 @@ export const createAuth = <S>(store: Store<S>, options = defaultOptions) => {
     login,
     forceLogout,
     fetchUser,
+    setTokenHeader,
   };
 };
