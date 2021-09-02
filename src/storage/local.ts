@@ -1,4 +1,4 @@
-import { AuthStorage } from '../../types/index';
+import {AuthStorage} from '../../types/index';
 
 export class LocalStorage implements AuthStorage {
   set(key: string, value: any) {
@@ -6,15 +6,7 @@ export class LocalStorage implements AuthStorage {
   }
 
   get(key: string, defaultValue: any) {
-    try {
-      const token = localStorage.getItem(key)
-
-      console.log(token)
-
-      return token
-    } catch {
-      return defaultValue
-    }
+    return localStorage.getItem(key) || defaultValue;
   }
 
   remove(key: string) {
@@ -22,6 +14,6 @@ export class LocalStorage implements AuthStorage {
   }
 
   clear() {
-    localStorage.clear()
+    localStorage.clear();
   }
 }
