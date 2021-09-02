@@ -1,4 +1,4 @@
-import {ref, watch} from 'vue';
+import {computed, ref, watch} from 'vue';
 import axios from 'axios';
 import merge from 'lodash/merge';
 import get from 'lodash/get';
@@ -55,7 +55,7 @@ export const createAuth = <S>(store: Store<S>, options = defaultOptions) => {
 
     storage.clear();
 
-    store.commit('logout');
+    store.commit('auth/logout');
 
     return Promise.resolve(true);
   };
@@ -69,7 +69,7 @@ export const createAuth = <S>(store: Store<S>, options = defaultOptions) => {
 
         await forceLogout();
 
-        store.commit('logout');
+        store.commit('auth/logout');
 
         return data;
       } catch (e: any) {
@@ -153,12 +153,27 @@ export const createAuth = <S>(store: Store<S>, options = defaultOptions) => {
     registerAxiosInterceptors(axios, options);
   });
 
+  const storeUser = computed(() => {
+    return store.getters['auth/user'];
+  });
+
+  const storeToken = computed(() => {
+    return store.getters['auth/token'];
+  });
+
+  const storeAuthState = computed(() => {
+    return store.getters['auth/isLoggedIn'];
+  });
+
   return {
-    token,
-    user,
-    loggedIn,
+    localToken: token,
+    localUser: user,
+    loggedIn: storeAuthState,
     error,
     loading,
+    user: storeUser,
+    token: storeToken,
+    storeAuthState,
     setUser,
     setToken,
     logout,
