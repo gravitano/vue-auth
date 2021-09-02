@@ -1,0 +1,32 @@
+{
+  "name": "@frontend/authentication",
+  "version": "0.0.3-alpha.13+a387361",
+  "description": "Auth Plugin for Vue 3",
+  "author": "Warsono <warsono16694@gmail.com>",
+  "homepage": "",
+  "license": "ISC",
+  "main": "index.ts",
+  "directories": {
+    "src": "src"
+  },
+  "files": [
+    "index.ts",
+    "src"
+  ],
+  "publishConfig": {
+    "@frontend:registry": "https://git.gits.id/api/v4/projects/1336/packages/npm/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@git.gits.id:frontend/starter/vue-3/starterkit.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "dependencies": {
+    "jwt-decode": "^3.1.2",
+    "secure-ls": "^1.2.6",
+    "vuex": "^4.0.2"
+  },
+  "gitHead": "a3873617b764442416da0687a66a7ba20638c7cb"
+}
