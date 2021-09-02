@@ -7,7 +7,6 @@ import jwtDecode from 'jwt-decode';
 import { AuthOptions, AuthUser, LoginPayload } from '../types/index';
 import { storage } from './storage';
 import { RouteLocationNormalized, NavigationGuardNext } from 'vue-router';
-import { requiresAuthMiddleware, guestMiddleware } from '../../../src/middleware/handler';
 import { Store } from 'vuex';
 
 export const defaultOptions: AuthOptions = {
@@ -105,7 +104,7 @@ export const createAuth = <S>(store: Store<S>, options = defaultOptions) => {
         store.commit('logout');
 
         return data;
-      } catch (e) {
+      } catch (e: any) {
         loading.value = false;
         error.value = e.response.data?.message || e.message;
 
@@ -125,7 +124,7 @@ export const createAuth = <S>(store: Store<S>, options = defaultOptions) => {
       setUser(get(data, options.user.property));
 
       return data;
-    } catch (e) {
+    } catch (e: any) {
       loading.value = false;
       error.value = e.response.data?.message || e.message;
 
@@ -167,7 +166,7 @@ export const createAuth = <S>(store: Store<S>, options = defaultOptions) => {
       }
 
       return data;
-    } catch (e) {
+    } catch (e: any) {
       loading.value = false;
       error.value = e.response?.data?.message || e.message;
 
