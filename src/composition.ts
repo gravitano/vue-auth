@@ -73,8 +73,9 @@ export const createAuth = <S>(store: Store<S>, options = defaultOptions) => {
 
         return data;
       } catch (e: any) {
+        console.error(e);
         loading.value = false;
-        error.value = e.response.data?.message || e.message;
+        error.value = e.response?.data?.message || e.message;
 
         return e.response.data;
       }
@@ -93,8 +94,9 @@ export const createAuth = <S>(store: Store<S>, options = defaultOptions) => {
 
       return data;
     } catch (e: any) {
+      console.error(e);
       loading.value = false;
-      error.value = e.response.data?.message || e.message;
+      error.value = e.response?.data?.message || e.message;
 
       return e.response.data;
     }
@@ -120,8 +122,6 @@ export const createAuth = <S>(store: Store<S>, options = defaultOptions) => {
 
       let tokenData = get(data, options.token.property);
       setToken(tokenData);
-
-      console.log(tokenData, options);
 
       if (options.user.autoFetch) {
         setTokenHeader(tokenData);
