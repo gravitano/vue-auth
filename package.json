@@ -4,7 +4,7 @@
   "description": "Authentication Plugin for Vue 3",
   "author": "Warsono <warsono16694@gmail.com>",
   "homepage": "",
-  "license": "ISC",
+  "license": "MIT",
   "main": "index.ts",
   "directories": {
     "src": "src"
