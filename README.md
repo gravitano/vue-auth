@@ -1,137 +1,48 @@
 # Auth
 
-> Auth Plugin for Vue 3
+> Authentication Plugin for Vue 3
+
+- [Auth](#auth)
+  - [Installation](#installation)
+  - [Usage](#usage)
+    - [Use as Vue Plugin](#use-as-vue-plugin)
+    - [Use with Composition API](#use-with-composition-api)
+      - [`login(payload: Object): Promise<AxiosResponse>`](#loginpayload-object-promiseaxiosresponse)
+      - [`fetchUser(): Promise<AxiosResponse>`](#fetchuser-promiseaxiosresponse)
+      - [`setToken(tokenData: string): void`](#settokentokendata-string-void)
+      - [`setUser(userData: Object): void`](#setuseruserdata-object-void)
+      - [`logout(): boolean`](#logout-boolean)
+      - [`forceLogout(): boolean`](#forcelogout-boolean)
+      - [`user: Object`](#user-object)
+      - [`loggedIn: boolean`](#loggedin-boolean)
+    - [Manually Creating The Auth Function](#manually-creating-the-auth-function)
+  - [Options](#options)
+  - [License](#license)
 
 ## Installation
 
-- Add repo as submodule on your project
-  ```bash
-  cd /path-to-your-project
-  git clone git@git.gits.id:frontend/starter/vue-3/auth.git src/packages/auth
-  ```
-- Add auth package as npm dependencies. Open `package.json` and add this line inside your `dependencies` block.
-  ```json
-  "dependencies": {
-    // ... other dependecies
-    "@frontend/auth": "file:src/packages/auth"
-  }
-  ```
-- Install the package by running `npm install`
-- Done
+Install the package just like regular npm package.
 
-## Usage with Composition API
-
-Import the package and create the `auth` variable.
-
-```js
-// /src/plugins/auth.js
-import {useAuth} from '@frontend/auth';
-
-const options = {
-  endpoints: {
-    login: {
-      url: '/login',
-      method: 'post',
-    },
-    logout: {
-      url: '/logout',
-      method: 'delete',
-    },
-    user: {
-      url: '/my/profile',
-      method: 'get',
-    },
-  },
-};
-
-const auth = useAuth(options);
+```bash
+npm i @frontend/auth
+# OR
+yarn add @frontend/auth
 ```
 
-### `login(payload: Object): Promise<AxiosResponse>`
+## Usage
 
-Login the user and save token to the auth storage.
-
-```js
-auth.login({
-  email: 'admin@example.com',
-  password: 'admin',
-});
-```
-
-### `fetchUser(): Promise<AxiosResponse>`
-
-Fetch user data from API.
-
-```js
-const user = await auth.fetchUser();
-console.log(user);
-```
-
-### `setToken(tokenData: string): void`
-
-Manually Set User Token.
-
-```js
-auth.setToken(token);
-```
-
-### `setUser(userData: Object): void`
-
-Manually set the user data.
-
-```js
-const userData = {
-  id: 1,
-  name: 'Admin',
-};
-
-auth.setUser(userData);
-```
-
-### `logout(): boolean`
-
-Logout the current user.
-
-```js
-auth.logout();
-```
-
-### `forceLogout(): boolean`
-
-Force logout the current user.
-
-```js
-auth.forceLogout();
-```
-
-### `user: Object`
-
-Get the current user data.
-
-```js
-console.log(auth.user);
-```
-
-## `loggedIn: boolean`
-
-Get the current logged in state.
-
-```js
-console.log(auth.loggedIn);
-```
-
-## Usage as Vue Plugin
+### Use as Vue Plugin
 
 Install the plugin to your Vue app.
 
 ```js
 // main.js
 import {createApp} from 'vue';
-import {authPlugin} from '@frontend/auth'; // 👈 import the plugin
+import AuthPlugin from '@frontend/auth'; // 👈 import the plugin
 
 const app = createApp(App);
 
-app.use(authPlugin); // 👈 use the plugin
+app.use(AuthPlugin); // 👈 use the plugin
 
 app.mount('#app');
 ```
@@ -147,42 +58,146 @@ After that, you can access the plugin via `$auth` global property.
 If you are using composition API, you can also access the `auth` object by using `inject` method.
 
 ```js
-import {inject} from 'vue'
+import {injectAuth} from '@frontend/auth'
 
-const auth = inject('auth')
+// user is Ref
+const {user} = injectAuth()
 
 // access the user
-console.log(auth.user
+console.log(user)
 ```
 
-Or, by importing `auth` function, which do the same thing as above.
+### Use with Composition API
 
-```js
-import {auth as useAuth} from '@frontend/auth';
+To use the auth in composition API, just import and use the `useAuth` function.
+
+```ts
+import {useAuth} from '@frontend/auth';
 
 const auth = useAuth();
 
-// access the user
+// OR with object destruction
+const {user} = useAuth();
+```
+
+#### `login(payload: Object): Promise<AxiosResponse>`
+
+Login the user and save token to the auth storage.
+
+```js
+auth.login({
+  email: 'admin@example.com',
+  password: 'admin',
+});
+```
+
+#### `fetchUser(): Promise<AxiosResponse>`
+
+Fetch user data from API.
+
+```js
+const user = await auth.fetchUser();
+console.log(user);
+```
+
+#### `setToken(tokenData: string): void`
+
+Manually Set User Token.
+
+```js
+auth.setToken(token);
+```
+
+#### `setUser(userData: Object): void`
+
+Manually set the user data.
+
+```js
+const userData = {
+  id: 1,
+  name: 'Admin',
+};
+
+auth.setUser(userData);
+```
+
+#### `logout(): boolean`
+
+Logout the current user.
+
+```js
+auth.logout();
+```
+
+#### `forceLogout(): boolean`
+
+Force logout the current user.
+
+```js
+auth.forceLogout();
+```
+
+#### `user: Object`
+
+Get the current user data.
+
+```js
 console.log(auth.user);
+```
+
+#### `loggedIn: boolean`
+
+Get the current logged in state.
+
+```js
+console.log(auth.loggedIn);
+```
+
+
+### Manually Creating The Auth Function
+
+First, create `auth.ts` file under your `src/plugins` folder.
+```ts
+// src/plugins/auth.ts
+import {AuthOptions} from '@frontend/auth/types';
+import {createAuth} from '@frontend/auth';
+import {authOptions} from '~/config'; // 👈 your custom config
+import store, {AppRootState} from '~/store';
+
+export const useAuth = () => createAuth<AppRootState>(store, authOptions);
+```
+
+Then, in your component, just import and use it as regular composition function. For example:
+```vue
+<script setup lang="ts">
+import {useAuth} from '~/plugins/auth'
+
+// destruct user object from `useAuth` function
+const {user} = useAuth();
+
+console.log(user); // <-- user data
+</script>
 ```
 
 ## Options
 
-This is complete default options object:
+This is the default options object:
 
-```js
-const defaultOptions = {
+```ts
+import { AuthOptions } from '@frontend/auth/types'
+
+export const defaultOptions: AuthOptions = {
   endpoints: {
     login: {
-      url: '/login',
+      url: '/auth/login',
       method: 'post',
     },
     logout: {
-      url: '/logout',
+      url: '/auth/logout',
       method: 'delete',
     },
     user: {
-      url: '/my/profile',
+      url: '/auth/me',
       method: 'get',
     },
   },
@@ -190,7 +205,7 @@ const defaultOptions = {
     property: 'data.token',
     type: 'Bearer',
     storageName: 'auth.token',
-    autoDecode: true,
+    autoDecode: false,
     name: 'Authorization',
   },
   user: {
@@ -200,6 +215,11 @@ const defaultOptions = {
   },
   moduleName: 'auth',
   expiredStorage: 'auth.expired',
+  redirect: {
+    home: '/',
+    login: '/auth/login',
+  },
+  registerAxiosInterceptors: true,
 };
 ```
 
