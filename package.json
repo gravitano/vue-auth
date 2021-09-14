@@ -1,7 +1,7 @@
 {
   "name": "@frontend/auth",
   "version": "0.0.1",
-  "description": "Auth Plugin for Vue 3",
+  "description": "Authentication Plugin for Vue 3",
   "author": "Warsono <warsono16694@gmail.com>",
   "homepage": "",
   "license": "ISC",

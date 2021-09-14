@@ -1,15 +1,23 @@
-import {computed, ref, watch} from 'vue';
+import {computed, ComputedRef, Ref, ref, watch} from 'vue';
 import axios from 'axios';
 import merge from 'lodash/merge';
 import get from 'lodash/get';
 import {registerAxiosInterceptors} from './axios-interceptors';
 import jwtDecode from 'jwt-decode';
-import {AuthUser, LoginPayload} from '../types/index';
+import {
+  AuthComposition,
+  AuthFunction,
+  AuthUser,
+  LoginPayload,
+} from '../types/index';
 import {storage} from './storage';
 import {Store} from 'vuex';
 import {defaultOptions} from './options';
 
-export const createAuth = <S>(store: Store<S>, options = defaultOptions) => {
+export const createAuth: AuthFunction = <S>(
+  store: Store<S>,
+  options = defaultOptions,
+) => {
   const initialToken = storage.get<string | null>(
     options.token.storageName,
     null,
@@ -108,7 +116,7 @@ export const createAuth = <S>(store: Store<S>, options = defaultOptions) => {
     ] = `${options.token.type} ${tokenData}`;
   };
 
-  const login = async (payload: LoginPayload) => {
+  const login = async <P extends LoginPayload>(payload: P) => {
     try {
       loading.value = true;
       error.value = '';

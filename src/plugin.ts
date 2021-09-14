@@ -5,17 +5,22 @@ import {AuthOptions} from '../types/index';
 import {Store} from 'vuex';
 import {defaultOptions} from './options';
 
-export const injectAuth = () => inject('auth');
+interface UserPlugin<S> {
+  auth?: typeof createAuth;
+  store: Store<S>;
+  options: AuthOptions;
+}
+
+export const useAuth = (injectKey = 'auth') => inject(injectKey);
 
 export const AuthPlugin = {
-  install: (
-    app: App,
-    {store, options}: {store: Store<any>; options: AuthOptions},
-  ) => {
-    const $auth = createAuth(store, merge(defaultOptions, options));
+  install: (app: App, {auth, store, options}: UserPlugin<unknown>) => {
+    if (!auth) {
+      auth = createAuth(store, merge(defaultOptions, options));
+    }
 
-    app.config.globalProperties.$auth = $auth;
+    app.config.globalProperties.$auth = auth;
 
-    app.provide('auth', $auth);
+    app.provide('auth', auth);
   },
 };
