@@ -24,9 +24,9 @@
 Install the package just like regular npm package.
 
 ```bash
-npm i @frontend/auth
+npm i @gravitano/vue-auth
 # OR
-yarn add @frontend/auth
+yarn add @gravitano/vue-auth
 ```
 
 ## Usage
@@ -38,7 +38,7 @@ Install the plugin to your Vue app.
 ```js
 // main.js
 import {createApp} from 'vue';
-import AuthPlugin from '@frontend/auth'; // 👈 import the plugin
+import AuthPlugin from '@gravitano/vue-auth'; // 👈 import the plugin
 
 const app = createApp(App);
 
@@ -58,7 +58,7 @@ After that, you can access the plugin via `$auth` global property.
 If you are using composition API, you can also access the `auth` object by using `inject` method.
 
 ```js
-import {injectAuth} from '@frontend/auth'
+import {injectAuth} from '@gravitano/vue-auth'
 
 // user is Ref
 const {user} = injectAuth()
@@ -72,7 +72,7 @@ console.log(user)
 To use the auth in composition API, just import and use the `useAuth` function.
 
 ```ts
-import {useAuth} from '@frontend/auth';
+import {useAuth} from '@gravitano/vue-auth';
 
 const auth = useAuth();
 
@@ -159,8 +159,8 @@ console.log(auth.loggedIn);
 First, create `auth.ts` file under your `src/plugins` folder.
 ```ts
 // src/plugins/auth.ts
-import {AuthOptions} from '@frontend/auth/types';
-import {createAuth} from '@frontend/auth';
+import {AuthOptions} from '@gravitano/vue-auth/types';
+import {createAuth} from '@gravitano/vue-auth';
 import {authOptions} from '~/config'; // 👈 your custom config
 import store, {AppRootState} from '~/store';
 
@@ -184,7 +184,7 @@ console.log(user); // <-- user data
 This is the default options object:
 
 ```ts
-import { AuthOptions } from '@frontend/auth/types'
+import { AuthOptions } from '@gravitano/vue-auth/types'
 
 export const defaultOptions: AuthOptions = {
   endpoints: {
