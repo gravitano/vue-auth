@@ -225,4 +225,4 @@ export const defaultOptions: AuthOptions = {
 
 ## License
 
-Copyright @ GITS Indonesia. 2021-Present.
+[MIT](https://opensource.org/licenses/MIT)
