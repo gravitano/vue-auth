@@ -4,6 +4,7 @@ import merge from 'lodash/merge';
 import {AuthFunction, AuthOptions} from '../types/index';
 import {Store} from 'vuex';
 import {defaultOptions} from './options';
+import {useStorage} from './storage';
 
 interface UserPlugin<S> {
   auth?: AuthFunction;
@@ -16,9 +17,10 @@ export const injectAuth = (injectKey = 'auth'): AuthFunction | undefined =>
 
 export const AuthPlugin = {
   install: (app: App, {auth, store, options}: UserPlugin<unknown>) => {
+    const storage = useStorage(options.storage.driver);
     if (!auth) {
       auth = (store, options) =>
-        createAuth(store, merge(defaultOptions, options));
+        createAuth(store, merge(defaultOptions, options), storage);
     }
 
     app.config.globalProperties.$auth = auth;

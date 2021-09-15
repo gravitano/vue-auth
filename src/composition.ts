@@ -7,16 +7,17 @@ import jwtDecode from 'jwt-decode';
 import {
   AuthComposition,
   AuthFunction,
+  AuthStorage,
   AuthUser,
   LoginPayload,
 } from '../types/index';
-import {storage} from './storage';
 import {Store} from 'vuex';
 import {defaultOptions} from './options';
 
 export const createAuth: AuthFunction = <S>(
   store: Store<S>,
   options = defaultOptions,
+  storage: AuthStorage,
 ) => {
   const initialToken = storage.get<string | null>(
     options.token.storageName,

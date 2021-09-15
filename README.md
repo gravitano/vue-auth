@@ -220,6 +220,9 @@ export const defaultOptions: AuthOptions = {
     login: '/auth/login',
   },
   registerAxiosInterceptors: true,
+  storage: {
+    driver: 'secureLs', // supported: local, secureLs (secure local storage)
+  },
 };
 ```
 

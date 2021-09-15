@@ -1,12 +1,16 @@
+import {AxiosInstance} from 'axios';
+import {useStorage} from './storage';
+import {AuthOptions} from '../types/index';
 
-import { AxiosInstance } from 'axios'
-import { storage } from './storage';
-import { AuthOptions } from '../types/index';
+export const registerAxiosInterceptors = (
+  axios: AxiosInstance,
+  options: AuthOptions,
+) => {
+  const storage = useStorage(options.storage.driver);
 
-export const registerAxiosInterceptors = (axios: AxiosInstance, options: AuthOptions) => {
   axios.interceptors.request.use(
     function (config) {
-      const token = storage.get(options.token.storageName)
+      const token = storage.get(options.token.storageName);
       if (token) {
         config.headers[options.token.name] = `${options.token.type} ${token}`;
       }

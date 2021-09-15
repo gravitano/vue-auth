@@ -1,4 +1,4 @@
-import { AuthOptions } from '../types'
+import {AuthOptions} from '../types';
 
 export const defaultOptions: AuthOptions = {
   endpoints: {
@@ -34,4 +34,7 @@ export const defaultOptions: AuthOptions = {
     login: '/auth/login',
   },
   registerAxiosInterceptors: true,
+  storage: {
+    driver: 'secureLs',
+  },
 };

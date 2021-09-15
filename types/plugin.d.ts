@@ -1,3 +1,8 @@
+import {ComputedRef, Ref} from 'vue';
+import {Store} from 'vuex';
+import {AuthOptions} from './options';
+import {AuthStorage} from './storage';
+
 export type LoginPayload = {
   email: string;
   password: string;
@@ -28,4 +33,5 @@ export type AuthComposition = {
 export type AuthFunction = <S>(
   store: Store<S>,
   options: AuthOptions,
+  storage: AuthStorage,
 ) => AuthComposition;

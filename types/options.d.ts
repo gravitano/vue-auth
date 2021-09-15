@@ -1,5 +1,7 @@
 import {AxiosRequestConfig} from 'axios';
 
+export type SupportedAuthStorage = 'local' | 'secureLs';
+
 export type AuthOptions = {
   endpoints: {
     login: AxiosRequestConfig;
@@ -25,4 +27,7 @@ export type AuthOptions = {
     login: string;
   };
   registerAxiosInterceptors: boolean;
+  storage: {
+    driver: SupportedAuthStorage;
+  };
 };
