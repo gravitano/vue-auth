@@ -1,6 +1,6 @@
 {
   "name": "@gravitano/vue-auth",
-  "version": "0.0.1",
+  "version": "0.0.2-alpha.1",
   "description": "Authentication Plugin for Vue 3",
   "author": "Warsono <warsono16694@gmail.com>",
   "homepage": "",
@@ -11,7 +11,8 @@
   },
   "files": [
     "index.ts",
-    "src"
+    "src",
+    "types"
   ],
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
