@@ -1,6 +1,6 @@
 {
   "name": "@gravitano/vue-auth",
-  "version": "0.0.2-alpha.2",
+  "version": "0.0.2-alpha.3",
   "description": "Authentication Plugin for Vue 3",
   "author": "Warsono <warsono16694@gmail.com>",
   "homepage": "",
@@ -15,6 +15,7 @@
     "types"
   ],
   "scripts": {
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
