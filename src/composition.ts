@@ -117,7 +117,7 @@ export const createAuth: AuthFunction = <S>(
     ] = `${options.token.type} ${tokenData}`;
   };
 
-  const login = async <P extends LoginPayload>(payload: P) => {
+  const login = async <P = LoginPayload>(payload: P) => {
     try {
       loading.value = true;
       error.value = '';
