@@ -96,14 +96,15 @@ export const createAuth: AuthFunction = <S>(
   const fetchUser = async () => {
     try {
       loading.value = true;
-      const {data} = await axios.request(merge(options.endpoints.user));
+      const res = await axios.request(merge(options.endpoints.user));
       loading.value = false;
+
+      const data = res?.data;
 
       setUser(get(data, options.user.property));
 
       return data;
     } catch (e: any) {
-      console.error(e);
       loading.value = false;
       error.value = e.response?.data?.message || e.message;
 
@@ -147,9 +148,16 @@ export const createAuth: AuthFunction = <S>(
       return data;
     } catch (e: any) {
       loading.value = false;
-      error.value = e.response?.data?.message || e.message;
 
-      return e.response.data;
+      if (e.response) {
+        error.value = e.response?.data?.message || e.message;
+      } else if (e.request) {
+        error.value = e.message;
+      } else {
+        error.value = e.message;
+      }
+
+      return e.response?.data;
     }
   };
 
