@@ -153,6 +153,18 @@ export const createAuth: AuthFunction = <S>(
     }
   };
 
+  const loginAs = <U = AuthUser>(user: U, token: string) => {
+    setUser(user);
+    setToken(token);
+    setTokenHeader(token);
+
+    return Promise.resolve({
+      code: 200,
+      data: {user, token},
+      meta: null,
+    });
+  };
+
   // its component-only
   // onErrorCaptured((err) => {
   //   error.value = err.message;
@@ -187,6 +199,7 @@ export const createAuth: AuthFunction = <S>(
     setToken,
     logout,
     login,
+    loginAs,
     forceLogout,
     fetchUser,
     setTokenHeader,

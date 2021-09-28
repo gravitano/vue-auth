@@ -25,6 +25,7 @@ export type AuthComposition = {
   setToken(tokenData: string): Ref<AuthToken>;
   logout(): void;
   login(payload: LoginPayload): Promise<any>;
+  loginAs<U = AuthUser>(user: U, token: string): Promise<U>;
   forceLogout(): void;
   fetchUser(): Promise<AuthUser | null>;
   setTokenHeader(tokenData: string): void;
