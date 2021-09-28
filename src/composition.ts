@@ -161,7 +161,7 @@ export const createAuth: AuthFunction = <S>(
     return Promise.resolve({
       code: 200,
       data: {user, token},
-      meta: null,
+      message: 'OK',
     });
   };
 

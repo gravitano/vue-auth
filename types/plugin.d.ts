@@ -8,6 +8,16 @@ export type LoginPayload = {
   password: string;
   rememberMe?: boolean;
 };
+
+export type AuthResponse<T> = {
+  code: number;
+  message: string;
+  data: {
+    token: string;
+    user: T;
+  };
+};
+
 export type AuthUser = Record<string, any> | null;
 export type AuthToken = string | null;
 export type AuthError = string | null;
@@ -25,7 +35,7 @@ export type AuthComposition = {
   setToken(tokenData: string): Ref<AuthToken>;
   logout(): void;
   login(payload: LoginPayload): Promise<any>;
-  loginAs<U = AuthUser>(user: U, token: string): Promise<U>;
+  loginAs<U = AuthUser>(user: U, token: string): Promise<AuthResponse<U>>;
   forceLogout(): void;
   fetchUser(): Promise<AuthUser | null>;
   setTokenHeader(tokenData: string): void;
