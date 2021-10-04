@@ -1,3 +1,17 @@
+## [0.0.2-alpha.5](https://github.com/pinteraktif/smark-akmil-cms/compare/v0.0.2-alpha.4...v0.0.2-alpha.5) (2021-10-04)
+
+
+### Bug Fixes
+
+* handle error on secureLs ([77296eb](https://github.com/pinteraktif/smark-akmil-cms/commit/77296eb0eca9970c0b958c95c5387763a5405f96))
+
+
+### Features
+
+* improved error handling ([59a6d76](https://github.com/pinteraktif/smark-akmil-cms/commit/59a6d76d902249210dc9bb5737ba71f5f1acd8dc))
+
+
+
 ## [0.0.2-alpha.4](https://github.com/pinteraktif/smark-akmil-cms/compare/v0.0.2-alpha.3...v0.0.2-alpha.4) (2021-09-23)
 
 
