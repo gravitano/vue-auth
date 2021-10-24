@@ -16,7 +16,16 @@
       - [`user: Object`](#user-object)
       - [`loggedIn: boolean`](#loggedin-boolean)
     - [Manually Creating The Auth Function](#manually-creating-the-auth-function)
+  - [Default Options](#default-options)
   - [Options](#options)
+    - [`endpoints`](#endpoints)
+    - [`token`](#token)
+    - [`user`](#user)
+    - [`moduleName`](#modulename)
+    - [`expiredStorage`](#expiredstorage)
+    - [`redirect`](#redirect)
+    - [`registerAxiosInterceptors`](#registeraxiosinterceptors)
+    - [`storage`](#storage)
   - [License](#license)
 
 ## Installation
