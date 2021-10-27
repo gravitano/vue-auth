@@ -18,6 +18,7 @@
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
     "test": "echo \"Error: run tests from root\" && exit 1",
     "build": "vite build",
+    "prepublishOnly": "npm run build",
     "release": "standard-version"
   },
   "dependencies": {
