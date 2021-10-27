@@ -230,7 +230,7 @@ export const defaultOptions: AuthOptions = {
   },
   registerAxiosInterceptors: true,
   storage: {
-    driver: 'secureLs', // supported: local, secureLs (secure local storage)
+    driver: 'secureLs', // supported: cookie, local, secureLs (secure local storage)
   },
 };
 ```
@@ -320,7 +320,7 @@ export const defaultOptions: AuthOptions = {
 - #### `driver`
   - Type: `string`
   - Default: `secureLs`
-  - Available Options: `local` | `secureLs`
+  - Available Options: `local` | `secureLs` | `cookie`
 
 
 
