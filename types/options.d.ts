@@ -1,6 +1,6 @@
 import {AxiosRequestConfig} from 'axios';
 
-export type SupportedAuthStorage = 'local' | 'secureLs';
+export type SupportedAuthStorage = 'local' | 'secureLs' | 'cookie';
 
 export type AuthOptions = {
   endpoints: {

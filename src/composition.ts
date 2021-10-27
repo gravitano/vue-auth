@@ -62,7 +62,7 @@ export const createAuth: AuthFunction = <S>(
     token.value = null;
     loggedIn.value = false;
 
-    storage.clear();
+    storage.clear(options);
 
     store.commit('auth/logout');
 

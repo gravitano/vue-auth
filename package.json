@@ -21,7 +21,11 @@
   "dependencies": {
     "jwt-decode": "^3.1.2",
     "secure-ls": "^1.2.6",
-    "vuex": "^4.0.2"
+    "vuex": "^4.0.2",
+    "js-cookie": "^3.0.1"
   },
-  "gitHead": "a3873617b764442416da0687a66a7ba20638c7cb"
+  "gitHead": "a3873617b764442416da0687a66a7ba20638c7cb",
+  "devDependencies": {
+    "@types/js-cookie": "^3.0.0"
+  }
 }
