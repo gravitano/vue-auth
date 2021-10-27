@@ -168,12 +168,19 @@ console.log(auth.loggedIn);
 First, create `auth.ts` file under your `src/plugins` folder.
 ```ts
 // src/plugins/auth.ts
-import {AuthOptions} from '@gravitano/vue-auth/types';
+import axios from 'axios';
+import store from '~/store';
+import {authOptions} from '~/config';
 import {createAuth} from '@gravitano/vue-auth';
-import {authOptions} from '~/config'; // 👈 your custom config
-import store, {AppRootState} from '~/store';
 
-export const useAuth = () => createAuth<AppRootState>(store, authOptions);
+interface AppRootState {
+  // your vuex root state
+}
+
+export const authStorage = useStorage(authOptions.storage.driver);
+
+export const useAuth = () =>
+  createAuth<AppRootState>(store, authOptions, authStorage, axios);
 ```
 
 Then, in your component, just import and use it as regular composition function. For example:
