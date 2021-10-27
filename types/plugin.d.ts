@@ -2,6 +2,7 @@ import {ComputedRef, Ref} from 'vue';
 import {Store} from 'vuex';
 import {AuthOptions} from './options';
 import {AuthStorage} from './storage';
+import {AxiosInstance} from 'axios';
 
 export type LoginPayload = {
   email: string;
@@ -34,4 +35,5 @@ export type AuthFunction = <S>(
   store: Store<S>,
   options: AuthOptions,
   storage: AuthStorage,
+  axios: AxiosInstance,
 ) => AuthComposition;

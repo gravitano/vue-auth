@@ -1,5 +1,5 @@
 import {computed, ComputedRef, Ref, ref, watch} from 'vue';
-import axios from 'axios';
+import {AxiosInstance} from 'axios';
 import merge from 'lodash/merge';
 import get from 'lodash/get';
 import {registerAxiosInterceptors} from './axios-interceptors';
@@ -18,6 +18,7 @@ export const createAuth: AuthFunction = <S>(
   store: Store<S>,
   options = defaultOptions,
   storage: AuthStorage,
+  axios: AxiosInstance,
 ) => {
   const initialToken = storage.get<string | null>(
     options.token.storageName,
@@ -158,6 +159,8 @@ export const createAuth: AuthFunction = <S>(
       }
 
       return e.response?.data;
+    } finally {
+      loading.value = false;
     }
   };
 
