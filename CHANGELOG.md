@@ -1,3 +1,19 @@
+# Changelog
+
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+### [0.0.2](https://github.com/pinteraktif/smart-akmil-web/compare/v0.0.2-alpha.5...v0.0.2) (2021-10-27)
+
+
+### Features
+
+* add `standard-version` ([04bcc06](https://github.com/pinteraktif/smart-akmil-web/commit/04bcc06416c3b96b03d166becd8d4efc1d4e9baa))
+* added auth middleware ([8775609](https://github.com/pinteraktif/smart-akmil-web/commit/8775609d2ee1bb9af0a9bb4cc33bf06b83a697b2))
+* allow to set cookie options ([7ff562a](https://github.com/pinteraktif/smart-akmil-web/commit/7ff562ab182032f1cef4412b0c8041022e83d66d))
+* build and add dist ([a95dab1](https://github.com/pinteraktif/smart-akmil-web/commit/a95dab1353155ae26dabce547f643f24961c9b12))
+* new storage driver `cookie` ([ea1ee09](https://github.com/pinteraktif/smart-akmil-web/commit/ea1ee096d747cb7a0f21e74a8eb63734a5a64d1d))
+* update readme ([5518a8d](https://github.com/pinteraktif/smart-akmil-web/commit/5518a8dbd47335f6f4dff18a89d720ab18a4a167))
+
 ## [0.0.2-alpha.5](https://github.com/pinteraktif/smark-akmil-cms/compare/v0.0.2-alpha.4...v0.0.2-alpha.5) (2021-10-04)
 
 
@@ -37,6 +53,3 @@
 
 
 ## 0.0.1 (2021-09-02)
-
-
-
