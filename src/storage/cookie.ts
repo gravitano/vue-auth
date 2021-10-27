@@ -2,8 +2,8 @@ import {AuthStorage, AuthOptions} from '../../types/index';
 import Cookies from 'js-cookie';
 
 export class CookieStorage implements AuthStorage {
-  set(key: string, value: any) {
-    Cookies.set(key, JSON.stringify(value));
+  set(key: string, value: any, options?: AuthOptions) {
+    Cookies.set(key, JSON.stringify(value), options?.cookie);
   }
 
   get(key: string, defaultValue: any) {
@@ -20,8 +20,8 @@ export class CookieStorage implements AuthStorage {
   }
 
   clear(options?: AuthOptions) {
-    Cookies.remove(options?.token?.storageName!);
-    Cookies.remove(options?.user?.storageName!);
-    Cookies.remove(options?.expiredStorage!);
+    Cookies.remove(options?.token?.storageName!, options?.cookie);
+    Cookies.remove(options?.user?.storageName!, options?.cookie);
+    Cookies.remove(options?.expiredStorage!, options?.cookie);
   }
 }

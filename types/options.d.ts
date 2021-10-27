@@ -1,4 +1,5 @@
 import {AxiosRequestConfig} from 'axios';
+import {CookieAttributes} from 'js-cookie';
 
 export type SupportedAuthStorage = 'local' | 'secureLs' | 'cookie';
 
@@ -30,4 +31,5 @@ export type AuthOptions = {
   storage: {
     driver: SupportedAuthStorage;
   };
+  cookie?: CookieAttributes;
 };
