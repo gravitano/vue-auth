@@ -17,7 +17,8 @@
   "scripts": {
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
     "test": "echo \"Error: run tests from root\" && exit 1",
-    "build": "vite build"
+    "build": "vite build",
+    "release": "standard-version"
   },
   "dependencies": {
     "jwt-decode": "^3.1.2",
@@ -28,6 +29,7 @@
   "gitHead": "a3873617b764442416da0687a66a7ba20638c7cb",
   "devDependencies": {
     "@types/js-cookie": "^3.0.0",
+    "standard-version": "^9.3.2",
     "vite": "^2.6.13"
   },
   "main": "dist/vue-auth.es.js",
