@@ -9,3 +9,15 @@ export type MiddlewareParams = {
   loggedIn: Ref<boolean>;
   options: AuthOptions;
 };
+
+export const requiresAuthMiddleware: ({
+  loggedIn,
+  next,
+  options,
+}: MiddlewareParams) => void;
+
+export const guestMiddleware: ({
+  loggedIn,
+  next,
+  options,
+}: MiddlewareParams) => void;

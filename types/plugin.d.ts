@@ -37,3 +37,5 @@ export type AuthFunction = <S>(
   storage: AuthStorage,
   axios: AxiosInstance,
 ) => AuthComposition;
+
+export const createAuth: AuthFunction;

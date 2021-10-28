@@ -5,3 +5,5 @@ export interface AuthStorage {
   remove(key: string): void;
   clear(options?: AuthOptions): void;
 }
+
+export const useStorage: (driver: SupportedAuthStorage) => AuthStorage;
