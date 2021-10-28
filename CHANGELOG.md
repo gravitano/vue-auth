@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3](https://github.com/pinteraktif/smart-akmil-web/compare/v0.0.2...v0.0.3) (2021-10-28)
+
+
+### Features
+
+* add custom vue properties definition ([759bf84](https://github.com/pinteraktif/smart-akmil-web/commit/759bf84c416177aa3fdb6b0ef0b6b643b2b2301a))
+* add prepublishOnly scripts ([0a497bd](https://github.com/pinteraktif/smart-akmil-web/commit/0a497bdc1027b5dec5a5497638a846ced823d943))
+* remove .npmrc file ([66a9156](https://github.com/pinteraktif/smart-akmil-web/commit/66a9156474bf30db647d5a77d5067feb3f9c88d0))
+
+
+### Bug Fixes
+
+* typing ([5ea80b3](https://github.com/pinteraktif/smart-akmil-web/commit/5ea80b3434bbaa4a3280ffbcfecd2cbb1035ee22))
+
 ### [0.0.2](https://github.com/pinteraktif/smart-akmil-web/compare/v0.0.2-alpha.5...v0.0.2) (2021-10-27)
 
 
