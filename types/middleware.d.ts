@@ -1,6 +1,7 @@
 import {Ref} from 'vue';
 import {AuthOptions} from './options';
 import {RouteLocationNormalized, NavigationGuardNext} from 'vue-router';
+import {AxiosInstance} from 'axios';
 
 export type MiddlewareParams = {
   to: RouteLocationNormalized;
@@ -21,3 +22,8 @@ export const guestMiddleware: ({
   next,
   options,
 }: MiddlewareParams) => void;
+
+export const registerAxiosInterceptors: (
+  axios: AxiosInstance,
+  options: AuthOptions,
+) => void;
