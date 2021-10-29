@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.4](https://github.com/pinteraktif/smart-akmil-web/compare/v0.0.3...v0.0.4) (2021-10-29)
+
+
+### Bug Fixes
+
+* missing types ([4c303b3](https://github.com/pinteraktif/smart-akmil-web/commit/4c303b33e3b57cc67d83aa57a47c0da494ebb170))
+* update lock file ([a3846b1](https://github.com/pinteraktif/smart-akmil-web/commit/a3846b12b7a23063b2ebf0e819cdab69d04fae30))
+
 ### [0.0.3](https://github.com/pinteraktif/smart-akmil-web/compare/v0.0.2...v0.0.3) (2021-10-28)
 
 
