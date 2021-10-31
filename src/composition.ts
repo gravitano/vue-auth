@@ -83,7 +83,6 @@ export const createAuth: AuthFunction = <S>(
 
         return data;
       } catch (e: any) {
-        console.error(e);
         loading.value = false;
         error.value = e.response?.data?.message || e.message;
 
@@ -120,8 +119,9 @@ export const createAuth: AuthFunction = <S>(
   };
 
   const login = async <P = LoginPayload>(payload: P) => {
+    loading.value = true;
+
     try {
-      loading.value = true;
       error.value = '';
 
       const {data} = await axios.request(
@@ -129,7 +129,6 @@ export const createAuth: AuthFunction = <S>(
           data: payload,
         }),
       );
-      loading.value = false;
 
       let tokenData = get(data, options.token.property);
       setToken(tokenData);
@@ -148,8 +147,6 @@ export const createAuth: AuthFunction = <S>(
 
       return data;
     } catch (e: any) {
-      loading.value = false;
-
       if (e.response) {
         error.value = e.response?.data?.message || e.message;
       } else if (e.request) {
