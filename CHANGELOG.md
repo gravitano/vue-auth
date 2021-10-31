@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.5](https://ssh.dev.azure.com///compare/v0.0.4...v0.0.5) (2021-10-31)
+
+
+### Bug Fixes
+
+* no console ([62f627a](https://ssh.dev.azure.com///commit/62f627a1fc02151fb52f6d8dc435d45b59350493))
+
 ### [0.0.4](https://github.com/pinteraktif/smart-akmil-web/compare/v0.0.3...v0.0.4) (2021-10-29)
 
 
