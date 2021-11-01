@@ -29,6 +29,7 @@ export const createAuth: AuthFunction = <S>(
     options.user.storageName,
     null,
   );
+
   const token = ref<string | null>(initialToken);
   const user = ref<AuthUser | null>(initialUser);
   const loggedIn = ref<boolean>(!!token.value);
@@ -173,6 +174,15 @@ export const createAuth: AuthFunction = <S>(
     }
   };
 
+  const getUser = async () => {
+    if (options.user.autoFetch) {
+      return fetchUser();
+    } else {
+      const localUser = storage.get(options.user.storageName);
+      return user.value || localUser;
+    }
+  };
+
   const getToken = () => {
     return storage.get(options.token.storageName);
   };
@@ -251,7 +261,7 @@ export const createAuth: AuthFunction = <S>(
   });
 
   const storeUser = computed(() => {
-    return store.getters['auth/user'];
+    return store.getters['auth/user'] || getUser();
   });
 
   const storeToken = computed(() => {
@@ -283,5 +293,6 @@ export const createAuth: AuthFunction = <S>(
     setRefreshToken,
     getRefreshToken,
     getToken,
+    getUser,
   };
 };

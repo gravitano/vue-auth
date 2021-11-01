@@ -42,6 +42,9 @@ export type AuthComposition = {
   setTokenHeader(tokenData: string): void;
   refreshToken(): void;
   setRefreshToken(token: string): void;
+  getUser: () => AuthUser;
+  getToken: () => string;
+  getRefreshToken: () => string;
 };
 
 export type AuthFunction = <S>(
