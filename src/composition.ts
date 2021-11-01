@@ -13,6 +13,7 @@ import {
 import {Store} from 'vuex';
 import {defaultOptions} from './options';
 import {isTokenExpired} from './token-status';
+import {useRouter} from 'vue-router';
 
 export const createAuth: AuthFunction = <S>(
   store: Store<S>,
@@ -33,6 +34,8 @@ export const createAuth: AuthFunction = <S>(
   const loggedIn = ref<boolean>(!!token.value);
   const error = ref<string | null>(null);
   const loading = ref(false);
+
+  const router = useRouter();
 
   if (options.registerAxiosInterceptors) {
     registerAxiosInterceptors(axios, options);
@@ -151,16 +154,11 @@ export const createAuth: AuthFunction = <S>(
 
       if (options.refreshToken.enabled) {
         const refreshToken = get(data, options.refreshToken.property);
-        console.log({refreshToken});
-        const decoded = jwtDecode(refreshToken);
-        console.log(decoded);
         storage.set(options.refreshToken.storageName, refreshToken);
       }
 
       return data;
     } catch (e: any) {
-      console.log(e);
-
       if (e.response) {
         error.value = e.response?.data?.message || e.message;
       } else if (e.request) {
@@ -195,15 +193,17 @@ export const createAuth: AuthFunction = <S>(
 
     try {
       loading.value = true;
+
       const refreshToken = getRefreshToken();
       const refreshTokenName = options.refreshToken.name;
-      console.log(refreshToken, refreshTokenName, options);
+
       const res = await axios.request({
         ...options.endpoints.refresh,
         data: {
           [refreshTokenName]: refreshToken,
         },
       });
+
       if (res.status === 200) {
         const newToken = get(res.data, options.token.property);
         const newRefreshToken = get(res.data, options.refreshToken.property);
@@ -212,6 +212,11 @@ export const createAuth: AuthFunction = <S>(
         setToken(newToken);
 
         return res.data;
+      }
+
+      if (options.refreshToken.autoLogout) {
+        forceLogout();
+        return router.push(options.redirect.login);
       }
 
       return null;

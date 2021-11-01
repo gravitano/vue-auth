@@ -28,6 +28,7 @@ export type AuthOptions = {
     maxAge: number;
     storageName: string;
     name: string;
+    autoLogout: boolean;
   };
   moduleName: string;
   expiredStorage: string;
