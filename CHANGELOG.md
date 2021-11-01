@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.6](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/compare/v0.0.5...v0.0.6) (2021-11-01)
+
+
+### Features
+
+* add support for refresh token ([1ce0936](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/1ce0936f879bc9bc57734dd3636c716c670358e0))
+* new composition method `loginAs` for simulating login user ([2bec70c](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/2bec70c9e738ae3447bad31d7762501fdf970047))
+* pull origin ([6cb6c34](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/6cb6c34546af488c188bbe2232f7bcf1e917e8fd))
+* wip new refresh token ([5e24ec0](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/5e24ec0fc690de88d48f403f7d75a1942e2548e2))
+
+
+### Bug Fixes
+
+* types ([841a916](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/841a91689c4eb54550b270c125d2e0ff8937b718))
+
 ### [0.0.5](https://ssh.dev.azure.com///compare/v0.0.4...v0.0.5) (2021-10-31)
 
 
