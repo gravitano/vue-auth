@@ -1,5 +1,5 @@
 import {computed, ComputedRef, Ref, ref, watch} from 'vue';
-import axios from 'axios';
+import {AxiosInstance} from 'axios';
 import merge from 'lodash/merge';
 import get from 'lodash/get';
 import {registerAxiosInterceptors} from './axios-interceptors';
@@ -18,6 +18,7 @@ export const createAuth: AuthFunction = <S>(
   store: Store<S>,
   options = defaultOptions,
   storage: AuthStorage,
+  axios: AxiosInstance,
 ) => {
   const initialToken = storage.get<string | null>(
     options.token.storageName,
@@ -62,7 +63,7 @@ export const createAuth: AuthFunction = <S>(
     token.value = null;
     loggedIn.value = false;
 
-    storage.clear();
+    storage.clear(options);
 
     store.commit('auth/logout');
 
@@ -82,7 +83,6 @@ export const createAuth: AuthFunction = <S>(
 
         return data;
       } catch (e: any) {
-        console.error(e);
         loading.value = false;
         error.value = e.response?.data?.message || e.message;
 
@@ -96,14 +96,15 @@ export const createAuth: AuthFunction = <S>(
   const fetchUser = async () => {
     try {
       loading.value = true;
-      const {data} = await axios.request(merge(options.endpoints.user));
+      const res = await axios.request(merge(options.endpoints.user));
       loading.value = false;
+
+      const data = res?.data;
 
       setUser(get(data, options.user.property));
 
       return data;
     } catch (e: any) {
-      console.error(e);
       loading.value = false;
       error.value = e.response?.data?.message || e.message;
 
@@ -117,9 +118,10 @@ export const createAuth: AuthFunction = <S>(
     ] = `${options.token.type} ${tokenData}`;
   };
 
-  const login = async <P extends LoginPayload>(payload: P) => {
+  const login = async <P = LoginPayload>(payload: P) => {
+    loading.value = true;
+
     try {
-      loading.value = true;
       error.value = '';
 
       const {data} = await axios.request(
@@ -127,7 +129,6 @@ export const createAuth: AuthFunction = <S>(
           data: payload,
         }),
       );
-      loading.value = false;
 
       const tokenData = get(data, options.token.property);
       setToken(tokenData);
@@ -151,10 +152,17 @@ export const createAuth: AuthFunction = <S>(
 
       return data;
     } catch (e: any) {
-      loading.value = false;
-      error.value = e.response?.data?.message || e.message;
+      if (e.response) {
+        error.value = e.response?.data?.message || e.message;
+      } else if (e.request) {
+        error.value = e.message;
+      } else {
+        error.value = e.message;
+      }
 
-      return e.response.data;
+      return e.response?.data;
+    } finally {
+      loading.value = false;
     }
   };
 

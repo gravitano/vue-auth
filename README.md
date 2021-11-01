@@ -16,7 +16,16 @@
       - [`user: Object`](#user-object)
       - [`loggedIn: boolean`](#loggedin-boolean)
     - [Manually Creating The Auth Function](#manually-creating-the-auth-function)
+  - [Default Options](#default-options)
   - [Options](#options)
+    - [`endpoints`](#endpoints)
+    - [`token`](#token)
+    - [`user`](#user)
+    - [`moduleName`](#modulename)
+    - [`expiredStorage`](#expiredstorage)
+    - [`redirect`](#redirect)
+    - [`registerAxiosInterceptors`](#registeraxiosinterceptors)
+    - [`storage`](#storage)
   - [License](#license)
 
 ## Installation
@@ -159,12 +168,19 @@ console.log(auth.loggedIn);
 First, create `auth.ts` file under your `src/plugins` folder.
 ```ts
 // src/plugins/auth.ts
-import {AuthOptions} from '@gravitano/vue-auth/types';
+import axios from 'axios';
+import store from '~/store';
+import {authOptions} from '~/config';
 import {createAuth} from '@gravitano/vue-auth';
-import {authOptions} from '~/config'; // 👈 your custom config
-import store, {AppRootState} from '~/store';
 
-export const useAuth = () => createAuth<AppRootState>(store, authOptions);
+interface AppRootState {
+  // your vuex root state
+}
+
+export const authStorage = useStorage(authOptions.storage.driver);
+
+export const useAuth = () =>
+  createAuth<AppRootState>(store, authOptions, authStorage, axios);
 ```
 
 Then, in your component, just import and use it as regular composition function. For example:
@@ -179,7 +195,7 @@ console.log(user); // <-- user data
 </script>
 ```
 
-## Options
+## Default Options
 
 This is the default options object:
 
@@ -221,10 +237,99 @@ export const defaultOptions: AuthOptions = {
   },
   registerAxiosInterceptors: true,
   storage: {
-    driver: 'secureLs', // supported: local, secureLs (secure local storage)
+    driver: 'secureLs', // supported: cookie, local, secureLs (secure local storage)
   },
 };
 ```
+
+
+## Options
+
+### `endpoints`
+
+- #### `login`
+  - `url`: Login path. E.g. `/user/login`
+  - `method`: HTTP Method. E.g. `GET`, `POST`, etc.
+- #### `logout`
+  - `url`: Logout path. E.g. `/user/logout`
+  - `method`: HTTP Method. E.g. `GET`, `POST`, etc.
+- #### `user`
+  - `url`: Endpoint for getting user data. E.g. `/my/profile`
+  - `method`: HTTP Method. E.g. `GET`, `POST`, etc.
+
+### `token`
+
+- #### `property`
+  Token property path using dot notation.
+  - Type: `string`
+  - Default: `data.token`
+- #### `type`
+  Token type.
+  - Type: `string`
+  - Default: `Bearer`
+- #### `storageName`
+  Token storage name.
+  - Type: `string`
+  - Default: `auth.token`
+- #### `autoDecode`
+  Auto decodes token when possible. Usually used when using JWT Token.
+  - Type: `boolean`
+  - Default: `true`
+- #### `name`
+  Token header name.
+  - Type: `string`
+  - Default:`Authorization`
+
+### `user`
+
+- #### `autoFetch`
+  Fetch user data automatically when user successfully logged in.
+  - Type: `boolean`
+  - Default: `true`
+- #### `property`
+  Property path of user data.
+  - Type: `string`
+  - Default: `data`
+- #### `storageName`
+  Storage name for storing user data.
+  - Type: `string`
+  - Default: `auth.user`
+
+### `moduleName`
+  Vuex's module name.
+  - Default: `auth`
+  - Type: `string`
+
+### `expiredStorage`
+  Storage name for storing token expiratin time.
+  - Type: `string`
+  - Default: `auth.expired`
+
+### `redirect`
+  
+- #### `home`
+  Homepage path.
+  - Type: `string`
+  - Default: `/`
+- #### `login`
+  Login path.
+  - Type: `string`
+  - Default: `/`
+
+
+### `registerAxiosInterceptors`
+  Register custom axios interceptors when `true`. Set the value to `false` if you want to use your own interceptors.
+  - Type: `boolean`
+  - Default: `true`
+
+### `storage`
+
+- #### `driver`
+  - Type: `string`
+  - Default: `secureLs`
+  - Available Options: `local` | `secureLs` | `cookie`
+
+
 
 ## License
 

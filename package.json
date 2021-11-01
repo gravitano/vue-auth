@@ -1,26 +1,47 @@
 {
   "name": "@gravitano/vue-auth",
-  "version": "0.0.2-alpha.2",
+  "version": "0.0.5",
   "description": "Authentication Plugin for Vue 3",
   "author": "Warsono <warsono16694@gmail.com>",
   "homepage": "",
   "license": "MIT",
-  "main": "index.ts",
   "directories": {
     "src": "src"
   },
   "files": [
     "index.ts",
     "src",
-    "types"
+    "types",
+    "dist"
   ],
   "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1"
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
+    "test": "echo \"Error: run tests from root\" && exit 1",
+    "build": "vite build",
+    "prepublishOnly": "npm run build",
+    "release": "standard-version"
   },
   "dependencies": {
     "jwt-decode": "^3.1.2",
     "secure-ls": "^1.2.6",
-    "vuex": "^4.0.2"
+    "vuex": "^4.0.2",
+    "js-cookie": "^3.0.1"
   },
-  "gitHead": "a3873617b764442416da0687a66a7ba20638c7cb"
+  "gitHead": "a3873617b764442416da0687a66a7ba20638c7cb",
+  "devDependencies": {
+    "@types/js-cookie": "^3.0.0",
+    "standard-version": "^9.3.2",
+    "vite": "^2.6.13"
+  },
+  "main": "dist/vue-auth.es.js",
+  "unpkg": "dist/vue-auth.iife.js",
+  "jsdelivr": "dist/vue-auth.iife.js",
+  "module": "dist/vue-auth.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/vue-auth.es.js",
+      "require": "./dist/vue-auth.umd.js"
+    }
+  },
+  "types": "./types/index.d.ts"
 }

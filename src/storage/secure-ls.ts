@@ -1,13 +1,10 @@
 import SecureLS from 'secure-ls';
-import { AuthStorage } from '../../types/index';
+import {AuthStorage} from '../../types/index';
 
 export class SecureLocalStorage implements AuthStorage {
   protected _ls: SecureLS;
 
-  constructor(
-    options = { encodingType: 'aes', isCompression: true },
-  ) {
-
+  constructor(options = {encodingType: 'aes', isCompression: true}) {
     this._ls = new SecureLS({
       ...options,
     });
@@ -18,7 +15,11 @@ export class SecureLocalStorage implements AuthStorage {
   }
 
   get(key: string, defaultValue: string) {
-    return this._ls.get(key) || defaultValue;
+    try {
+      return this._ls.get(key) || defaultValue;
+    } catch {
+      return defaultValue;
+    }
   }
 
   remove(key: string) {
@@ -26,6 +27,6 @@ export class SecureLocalStorage implements AuthStorage {
   }
 
   clear() {
-    this._ls.clear()
+    this._ls.clear();
   }
 }
