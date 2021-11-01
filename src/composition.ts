@@ -183,8 +183,22 @@ export const createAuth: AuthFunction = <S>(
     }
   };
 
-  const getToken = () => {
-    return storage.get(options.token.storageName);
+  const isExpired = () => {
+    const expireTime = storage.get<number>(options.expiredStorage);
+    return isTokenExpired(expireTime);
+  };
+
+  const getFreshToken = () => {
+    return storage.get<string>(options.token.storageName);
+  };
+
+  const getToken = async () => {
+    if (isExpired()) {
+      await refreshToken();
+      return getFreshToken();
+    } else {
+      return getFreshToken();
+    }
   };
 
   const setRefreshToken = (token: string) => {
@@ -300,5 +314,7 @@ export const createAuth: AuthFunction = <S>(
     getRefreshToken,
     getToken,
     getUser,
+    getFreshToken,
+    isExpired,
   };
 };

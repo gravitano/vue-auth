@@ -1,3 +1,4 @@
+import {useAuth} from '~/plugins/auth';
 import {AxiosInstance} from 'axios';
 import {useStorage} from './storage';
 import {AuthOptions} from '../types/index';
@@ -7,10 +8,11 @@ export const registerAxiosInterceptors = (
   options: AuthOptions,
 ) => {
   const storage = useStorage(options.storage.driver);
+  const {getToken} = useAuth();
 
   axios.interceptors.request.use(
-    function (config) {
-      const token = storage.get(options.token.storageName);
+    async (config) => {
+      const token = await getToken();
       if (token && config.headers) {
         config.headers[options.token.name] = `${options.token.type} ${token}`;
       }
