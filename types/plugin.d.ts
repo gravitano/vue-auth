@@ -40,6 +40,8 @@ export type AuthComposition = {
   forceLogout(): void;
   fetchUser(): Promise<AuthUser | null>;
   setTokenHeader(tokenData: string): void;
+  refreshToken(): void;
+  setRefreshToken(token: string): void;
 };
 
 export type AuthFunction = <S>(

@@ -1,11 +1,10 @@
-import {computed, ComputedRef, Ref, ref, watch} from 'vue';
+import {computed, ref, watch} from 'vue';
 import {AxiosInstance} from 'axios';
 import merge from 'lodash/merge';
 import get from 'lodash/get';
 import {registerAxiosInterceptors} from './axios-interceptors';
 import jwtDecode from 'jwt-decode';
 import {
-  AuthComposition,
   AuthFunction,
   AuthStorage,
   AuthUser,
@@ -13,6 +12,7 @@ import {
 } from '../types/index';
 import {Store} from 'vuex';
 import {defaultOptions} from './options';
+import {isTokenExpired} from './token-status';
 
 export const createAuth: AuthFunction = <S>(
   store: Store<S>,
@@ -113,7 +113,7 @@ export const createAuth: AuthFunction = <S>(
   };
 
   const setTokenHeader = (tokenData: string) => {
-    axios.defaults.headers[
+    (axios.defaults.headers as any)[
       options.token.name
     ] = `${options.token.type} ${tokenData}`;
   };
@@ -137,9 +137,13 @@ export const createAuth: AuthFunction = <S>(
         setTokenHeader(tokenData);
         return await fetchUser();
       } else if (options.token.autoDecode) {
-        const decoded: {user: AuthUser} = jwtDecode(tokenData);
-        const {user} = decoded;
+        const decoded: {user?: AuthUser; exp: number} = jwtDecode(tokenData);
 
+        if (decoded.exp) {
+          storage.set(options.expiredStorage, decoded.exp);
+        }
+
+        const user = decoded.user || decoded;
         setUser(user);
 
         return data;
@@ -147,11 +151,16 @@ export const createAuth: AuthFunction = <S>(
 
       if (options.refreshToken.enabled) {
         const refreshToken = get(data, options.refreshToken.property);
+        console.log({refreshToken});
+        const decoded = jwtDecode(refreshToken);
+        console.log(decoded);
         storage.set(options.refreshToken.storageName, refreshToken);
       }
 
       return data;
     } catch (e: any) {
+      console.log(e);
+
       if (e.response) {
         error.value = e.response?.data?.message || e.message;
       } else if (e.request) {
@@ -166,14 +175,46 @@ export const createAuth: AuthFunction = <S>(
     }
   };
 
+  const getToken = () => {
+    return storage.get(options.token.storageName);
+  };
+
+  const setRefreshToken = (token: string) => {
+    storage.set(options.refreshToken.storageName, token);
+  };
+
+  const getRefreshToken = () => {
+    return storage.get(options.refreshToken.storageName);
+  };
+
   const refreshToken = async () => {
+    const expiredAt = storage.get<number>(options.expiredStorage);
+    if (!isTokenExpired(expiredAt)) {
+      return null;
+    }
+
     try {
       loading.value = true;
-      const res = await axios.request(options.endpoints.refresh);
-      console.log(res);
+      const refreshToken = getRefreshToken();
+      const refreshTokenName = options.refreshToken.name;
+      console.log(refreshToken, refreshTokenName, options);
+      const res = await axios.request({
+        ...options.endpoints.refresh,
+        data: {
+          [refreshTokenName]: refreshToken,
+        },
+      });
       if (res.status === 200) {
-        //
+        const newToken = get(res.data, options.token.property);
+        const newRefreshToken = get(res.data, options.refreshToken.property);
+
+        setRefreshToken(newRefreshToken);
+        setToken(newToken);
+
+        return res.data;
       }
+
+      return null;
     } catch (e: any) {
       loading.value = false;
       error.value = e.response?.data?.message || e.message;
@@ -234,5 +275,8 @@ export const createAuth: AuthFunction = <S>(
     fetchUser,
     setTokenHeader,
     refreshToken,
+    setRefreshToken,
+    getRefreshToken,
+    getToken,
   };
 };

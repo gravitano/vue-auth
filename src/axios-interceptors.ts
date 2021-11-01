@@ -11,7 +11,7 @@ export const registerAxiosInterceptors = (
   axios.interceptors.request.use(
     function (config) {
       const token = storage.get(options.token.storageName);
-      if (token) {
+      if (token && config.headers) {
         config.headers[options.token.name] = `${options.token.type} ${token}`;
       }
       return config;

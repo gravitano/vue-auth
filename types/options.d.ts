@@ -27,6 +27,7 @@ export type AuthOptions = {
     property: string;
     maxAge: number;
     storageName: string;
+    name: string;
   };
   moduleName: string;
   expiredStorage: string;
