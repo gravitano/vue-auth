@@ -129,7 +129,7 @@ export const createAuth: AuthFunction = <S>(
       );
       loading.value = false;
 
-      let tokenData = get(data, options.token.property);
+      const tokenData = get(data, options.token.property);
       setToken(tokenData);
 
       if (options.user.autoFetch) {
@@ -144,12 +144,34 @@ export const createAuth: AuthFunction = <S>(
         return data;
       }
 
+      if (options.refreshToken.enabled) {
+        const refreshToken = get(data, options.refreshToken.property);
+        storage.set(options.refreshToken.storageName, refreshToken);
+      }
+
       return data;
     } catch (e: any) {
       loading.value = false;
       error.value = e.response?.data?.message || e.message;
 
       return e.response.data;
+    }
+  };
+
+  const refreshToken = async () => {
+    try {
+      loading.value = true;
+      const res = await axios.request(options.endpoints.refresh);
+      console.log(res);
+      if (res.status === 200) {
+        //
+      }
+    } catch (e: any) {
+      loading.value = false;
+      error.value = e.response?.data?.message || e.message;
+      return e.response?.data;
+    } finally {
+      loading.value = false;
     }
   };
 
@@ -203,5 +225,6 @@ export const createAuth: AuthFunction = <S>(
     forceLogout,
     fetchUser,
     setTokenHeader,
+    refreshToken,
   };
 };

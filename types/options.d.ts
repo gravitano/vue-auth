@@ -7,6 +7,7 @@ export type AuthOptions = {
     login: AxiosRequestConfig;
     logout: AxiosRequestConfig;
     user: AxiosRequestConfig;
+    refresh?: AxiosRequestConfig;
   };
   token: {
     property: string;
@@ -18,6 +19,12 @@ export type AuthOptions = {
   user: {
     autoFetch: boolean;
     property: string;
+    storageName: string;
+  };
+  refreshToken: {
+    enabled: boolean;
+    property: string;
+    maxAge: number;
     storageName: string;
   };
   moduleName: string;

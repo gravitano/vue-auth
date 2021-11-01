@@ -14,6 +14,10 @@ export const defaultOptions: AuthOptions = {
       url: '/auth/me',
       method: 'get',
     },
+    refresh: {
+      url: '/auth/refresh',
+      method: 'post',
+    },
   },
   token: {
     property: 'data.token',
@@ -26,6 +30,12 @@ export const defaultOptions: AuthOptions = {
     autoFetch: true,
     property: 'data',
     storageName: 'auth.user',
+  },
+  refreshToken: {
+    enabled: false,
+    property: 'data',
+    maxAge: 60 * 60 * 24 * 30, // default 30 days
+    storageName: 'auth.refresh_token',
   },
   moduleName: 'auth',
   expiredStorage: 'auth.expired',
