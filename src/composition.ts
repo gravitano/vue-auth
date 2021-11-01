@@ -233,7 +233,13 @@ export const createAuth: AuthFunction = <S>(
     } catch (e: any) {
       loading.value = false;
       error.value = e.response?.data?.message || e.message;
-      return e.response?.data;
+
+      if (options.refreshToken.autoLogout) {
+        forceLogout();
+        return router.push(options.redirect.login);
+      } else {
+        return e.response?.data;
+      }
     } finally {
       loading.value = false;
     }
