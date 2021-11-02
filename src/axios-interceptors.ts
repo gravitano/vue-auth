@@ -1,14 +1,12 @@
-import {useAuth} from '~/plugins/auth';
 import {AxiosInstance} from 'axios';
-import {useStorage} from './storage';
-import {AuthOptions} from '../types/index';
+import {AuthComposition, AuthOptions} from '../types/index';
 
 export const registerAxiosInterceptors = (
   axios: AxiosInstance,
   options: AuthOptions,
+  auth: AuthComposition,
 ) => {
-  const storage = useStorage(options.storage.driver);
-  const {getToken} = useAuth();
+  const {getToken} = auth;
 
   axios.interceptors.request.use(
     async (config) => {
