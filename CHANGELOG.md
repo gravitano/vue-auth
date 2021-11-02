@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.7](https://github.com/pinteraktif/smart-akmil-web/compare/v0.0.6...v0.0.7) (2021-11-02)
+
+
+### Features
+
+* new `getToken` flow ([ed2a3c4](https://github.com/pinteraktif/smart-akmil-web/commit/ed2a3c4e77102c6cfcf4f04035f122c5620288b8))
+* new `getUser` function ([4953c83](https://github.com/pinteraktif/smart-akmil-web/commit/4953c834b883b720de48fc26a349337423e74f9e))
+* new refresh token option: `autoLogout`. ([df46398](https://github.com/pinteraktif/smart-akmil-web/commit/df463986dc0df07e08949da320ba17110e2f223a))
+
+
+### Bug Fixes
+
+* handle redirect when refresh token failed ([3df9ade](https://github.com/pinteraktif/smart-akmil-web/commit/3df9ade28db3af5cd57eeabd54fa06cb79e9134c))
+
 ### [0.0.6](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/compare/v0.0.5...v0.0.6) (2021-11-01)
 
 
