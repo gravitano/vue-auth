@@ -9,7 +9,6 @@ import {AxiosInstance} from 'axios';
 import defaultAxios from 'axios';
 
 interface UserPlugin<S> {
-  auth?: AuthFunction;
   store: Store<S>;
   options: AuthOptions;
   axios?: AxiosInstance;
@@ -19,15 +18,17 @@ export const injectAuth = (injectKey = 'auth'): AuthFunction | undefined =>
   inject(injectKey);
 
 export const AuthPlugin = {
-  install: (app: App, {auth, store, options, axios}: UserPlugin<unknown>) => {
+  install: (app: App, {options, axios, store}: UserPlugin<unknown>) => {
     axios = axios || defaultAxios;
 
     const storage = useStorage(options.storage.driver);
 
-    if (!auth) {
-      auth = (store, options) =>
-        createAuth(store, merge(defaultOptions, options), storage, axios!);
-    }
+    const auth = createAuth(
+      store,
+      merge(defaultOptions, options),
+      storage,
+      axios!,
+    );
 
     app.config.globalProperties.$auth = auth;
 
