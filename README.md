@@ -3,6 +3,7 @@
 > Authentication Plugin for Vue 3
 
 - [Auth](#auth)
+  - [Demo](#demo)
   - [Installation](#installation)
   - [Usage](#usage)
     - [Use as Vue Plugin](#use-as-vue-plugin)
@@ -29,6 +30,11 @@
     - [`refreshToken`](#refreshtoken)
       - [Default Options](#default-options-1)
   - [License](#license)
+
+## Demo
+
+- Checkout online demo [here](https://vue-auth-demo.vercel.app/)
+- View example project [here](https://github.com/gravitano/volar-starter)
 
 ## Installation
 
