@@ -49,11 +49,23 @@ Install the plugin to your Vue app.
 ```js
 // main.js
 import {createApp} from 'vue';
-import AuthPlugin from '@gravitano/vue-auth'; // 👈 import the plugin
+import Auth from '@gravitano/vue-auth'; // 👈 import the plugin
+import store from '~/store'
+import router from '~/router'
+import axios from 'axios'
 
 const app = createApp(App);
 
-app.use(AuthPlugin); // 👈 use the plugin
+app.use(Auth); // 👈 use the plugin
+
+// or with custom options
+// 👇
+app.use(Auth, {
+  options, // auth options
+  store, // vuex store instance
+  axios, // axios instance
+  router // vue router instance
+}); // 👈 use the plugin
 
 app.mount('#app');
 ```
@@ -169,20 +181,13 @@ console.log(auth.loggedIn);
 
 First, create `auth.ts` file under your `src/plugins` folder.
 ```ts
-// src/plugins/auth.ts
-import axios from 'axios';
-import store from '~/store';
 import {authOptions} from '~/config';
+import store, {AppRootState} from '~/store';
 import {createAuth} from '@gravitano/vue-auth';
+import axios from 'axios';
+import router from '~/router';
 
-interface AppRootState {
-  // your vuex root state
-}
-
-export const authStorage = useStorage(authOptions.storage.driver);
-
-export const useAuth = () =>
-  createAuth<AppRootState>(store, authOptions, authStorage, axios);
+export const useAuth = () => createAuth<AppRootState>(authOptions, axios, store, router);
 ```
 
 Then, in your component, just import and use it as regular composition function. For example:
