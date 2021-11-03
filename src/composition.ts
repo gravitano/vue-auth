@@ -298,5 +298,9 @@ export const createAuth: AuthFunction = <S>(
     getUser,
     getFreshToken,
     isExpired,
+    setTokenExpiration,
+    handleRefreshTokenFailed,
+    getTokenExpirationTime,
+    setRefreshTokenData,
   };
 };
