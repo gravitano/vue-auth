@@ -41,4 +41,5 @@ export type AuthOptions = {
     driver: SupportedAuthStorage;
   };
   cookie?: CookieAttributes;
+  baseURL?: string;
 };

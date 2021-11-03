@@ -36,6 +36,8 @@ export const defaultOptions: AuthOptions = {
     property: 'data',
     maxAge: 60 * 60 * 24 * 30, // default 30 days
     storageName: 'auth.refresh_token',
+    name: 'refresh_token',
+    autoLogout: true,
   },
   moduleName: 'auth',
   expiredStorage: 'auth.expired',
@@ -47,4 +49,5 @@ export const defaultOptions: AuthOptions = {
   storage: {
     driver: 'secureLs',
   },
+  baseURL: '',
 };

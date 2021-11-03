@@ -1,62 +1,45 @@
-import {computed, ref, watch} from 'vue';
-import {AxiosInstance} from 'axios';
+import {computed, ref} from 'vue';
+import defaultAxios, {AxiosInstance} from 'axios';
 import merge from 'lodash/merge';
 import get from 'lodash/get';
-import {registerAxiosInterceptors} from './axios-interceptors';
 import jwtDecode from 'jwt-decode';
-import {
-  AuthFunction,
-  AuthStorage,
-  AuthUser,
-  LoginPayload,
-} from '../types/index';
-import {Store} from 'vuex';
+import {AuthFunction, AuthUser, LoginPayload} from '../types/index';
+import {Store, useStore} from 'vuex';
 import {defaultOptions} from './options';
 import {isTokenExpired} from './token-status';
-import {useRouter} from 'vue-router';
+import {Router, useRouter} from 'vue-router';
+import {useStorage} from './storage';
 
 export const createAuth: AuthFunction = <S>(
-  store: Store<S>,
   options = defaultOptions,
-  storage: AuthStorage,
-  axios: AxiosInstance,
+  axios?: AxiosInstance,
+  store?: Store<S>,
+  router?: Router,
 ) => {
-  const initialToken = storage.get<string | null>(
-    options.token.storageName,
-    null,
-  );
-  const initialUser = storage.get<AuthUser | null>(
-    options.user.storageName,
-    null,
-  );
+  axios =
+    axios ||
+    defaultAxios.create({
+      baseURL: options.baseURL,
+    });
 
-  const token = ref<string | null>(initialToken);
-  const user = ref<AuthUser | null>(initialUser);
-  const loggedIn = ref<boolean>(!!token.value);
-  const error = ref<string | null>(null);
+  store = store || useStore();
+  router = router || useRouter();
+
+  const storage = useStorage(options.storage.driver);
+
+  const error = ref('');
   const loading = ref(false);
 
-  const router = useRouter();
-
   const setUser = (userData: AuthUser) => {
-    user.value = userData;
     storage.set(options.user.storageName, userData);
-
     store.commit('auth/setUser', userData);
-
-    loggedIn.value = true;
-
-    return user;
   };
 
   const setToken = (tokenData: string) => {
-    token.value = tokenData;
     storage.set(options.token.storageName, tokenData);
     store.commit('auth/setToken', tokenData);
 
     setTokenExpiration(tokenData);
-
-    return token;
   };
 
   const setTokenExpiration = (tokenData: string) => {
@@ -73,10 +56,6 @@ export const createAuth: AuthFunction = <S>(
   };
 
   const forceLogout = () => {
-    user.value = null;
-    token.value = null;
-    loggedIn.value = false;
-
     storage.clear(options);
 
     store.commit('auth/logout');
@@ -100,7 +79,7 @@ export const createAuth: AuthFunction = <S>(
         loading.value = false;
         error.value = e.response?.data?.message || e.message;
 
-        return e.response.data;
+        return e.response;
       }
     } else {
       return await forceLogout();
@@ -171,7 +150,7 @@ export const createAuth: AuthFunction = <S>(
         error.value = e.message;
       }
 
-      return e.response?.data;
+      return e.response;
     } finally {
       loading.value = false;
     }
@@ -188,8 +167,7 @@ export const createAuth: AuthFunction = <S>(
     if (options.user.autoFetch) {
       return fetchUser();
     } else {
-      const localUser = storage.get(options.user.storageName);
-      return user.value || localUser;
+      return storage.get(options.user.storageName);
     }
   };
 
@@ -216,7 +194,7 @@ export const createAuth: AuthFunction = <S>(
   };
 
   const getRefreshToken = () => {
-    return storage.get(options.refreshToken.storageName);
+    return storage.get<string>(options.refreshToken.storageName);
   };
 
   const getTokenExpirationTime = () => {
@@ -258,7 +236,6 @@ export const createAuth: AuthFunction = <S>(
 
       return handleRefreshTokenFailed(res);
     } catch (e: any) {
-      debugger;
       error.value = e.response?.data?.message || e.message;
 
       return handleRefreshTokenFailed(e);
@@ -272,7 +249,7 @@ export const createAuth: AuthFunction = <S>(
       forceLogout();
       return router.push(options.redirect.login);
     } else {
-      return e?.response?.data;
+      return e?.response;
     }
   };
 
@@ -288,27 +265,24 @@ export const createAuth: AuthFunction = <S>(
     });
   };
 
-  const storeUser = computed(() => {
-    return store.getters['auth/user'] || getUser();
+  const user = computed(() => {
+    return store?.getters['auth/user'] || getUser();
   });
 
-  const storeToken = computed(() => {
-    return store.getters['auth/token'];
+  const token = computed(() => {
+    return store?.getters['auth/token'];
   });
 
-  const storeAuthState = computed(() => {
-    return store.getters['auth/isLoggedIn'];
+  const loggedIn = computed(() => {
+    return store?.getters['auth/isLoggedIn'];
   });
 
   return {
-    localToken: token,
-    localUser: user,
-    loggedIn: storeAuthState,
+    loggedIn,
     error,
     loading,
-    user: storeUser,
-    token: storeToken,
-    storeAuthState,
+    user,
+    token,
     setUser,
     setToken,
     logout,

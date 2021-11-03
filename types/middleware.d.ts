@@ -8,7 +8,7 @@ export type MiddlewareParams = {
   to: RouteLocationNormalized;
   from: RouteLocationNormalized;
   next: NavigationGuardNext;
-  loggedIn: Ref<boolean>;
+  loggedIn?: Ref<boolean>;
   options: AuthOptions;
 };
 

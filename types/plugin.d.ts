@@ -3,6 +3,7 @@ import {Store} from 'vuex';
 import {AuthOptions} from './options';
 import {AuthStorage} from './storage';
 import {AxiosInstance} from 'axios';
+import {Router} from 'vue-router';
 
 export type LoginPayload = {
   email: string;
@@ -24,16 +25,13 @@ export type AuthToken = string | null;
 export type AuthError = string | null;
 
 export type AuthComposition = {
-  localToken: Ref<AuthToken>;
-  localUser: Ref<AuthUser>;
   loggedIn: Ref<boolean>;
   error: Ref<AuthError>;
   loading: Ref<boolean>;
   user: Ref<AuthUser>;
   token: Ref<string>;
-  storeAuthState: ComputedRef<boolean>;
-  setUser(userData: AuthUser): Ref<AuthUser>;
-  setToken(tokenData: string): Ref<AuthToken>;
+  setUser(userData: AuthUser): void;
+  setToken(tokenData: string): void;
   logout(): void;
   loginAs<U = AuthUser>(user: U, token: string): Promise<AuthResponse<U>>;
   login<P = LoginPayload>(payload: P): Promise<any>;
@@ -43,15 +41,15 @@ export type AuthComposition = {
   refreshToken(): void;
   setRefreshToken(token: string): void;
   getUser: () => AuthUser;
-  getToken: () => string;
+  getToken: () => Promise<string>;
   getRefreshToken: () => string;
 };
 
 export type AuthFunction = <S>(
-  store: Store<S>,
   options: AuthOptions,
-  storage: AuthStorage,
-  axios: AxiosInstance,
+  axios?: AxiosInstance,
+  store?: Store<S>,
+  router?: Router,
 ) => AuthComposition;
 
 export const createAuth: AuthFunction;
