@@ -5,8 +5,6 @@ import {AuthOptions} from './options';
 import {AuthStorage} from './storage';
 
 export function authModule<R>(
-  initialState: Record<string, any>,
   options: AuthOptions,
-  axios: AxiosInstance,
-  storage: AuthStorage,
+  initialState?: Record<string, any>,
 ): Module<AuthState, R>;
