@@ -26,6 +26,8 @@
     - [`redirect`](#redirect)
     - [`registerAxiosInterceptors`](#registeraxiosinterceptors)
     - [`storage`](#storage)
+    - [`refreshToken`](#refreshtoken)
+      - [Default Options](#default-options-1)
   - [License](#license)
 
 ## Installation
@@ -330,6 +332,22 @@ export const defaultOptions: AuthOptions = {
   - Available Options: `local` | `secureLs` | `cookie`
 
 
+### `refreshToken`
+
+If you want to enable refresh token feature, first add the `refreshToken` options to the current `authOptions` and make sure the `refreshToken.enabled` is set to true.
+#### Default Options
+
+```ts
+  // ...
+  refreshToken: {
+    enabled: false,
+    property: 'data',
+    maxAge: 60 * 60 * 24 * 30, // default 30 days
+    storageName: 'auth.refresh_token',
+    name: 'refresh_token',
+    autoLogout: true,
+  },
+```
 
 ## License
 
