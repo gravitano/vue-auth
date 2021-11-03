@@ -54,13 +54,18 @@ export const handleRefreshToken = (
   const isUnauthorized = error.response.status === 401;
   const refreshTokenURL = normalizeURL(options.endpoints.refresh?.url!);
   const isRefreshingToken = originalRequest.url === refreshTokenURL;
+  const {refreshToken, forceLogout} = auth;
+
+  if (isUnauthorized && !isRefreshingToken) {
+    forceLogout();
+    return Promise.reject(error);
+  }
 
   if (isUnauthorized && isRefreshingToken) {
-    const {refreshToken} = auth;
-
     try {
       return refreshToken();
     } catch {
+      forceLogout();
       if (router) {
         router.push(options.redirect.login);
       }
