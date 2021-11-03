@@ -4,30 +4,29 @@ import merge from 'lodash/merge';
 import {AuthFunction, AuthOptions} from '../types/index';
 import {Store} from 'vuex';
 import {defaultOptions} from './options';
-import {useStorage} from './storage';
 import {AxiosInstance} from 'axios';
 import defaultAxios from 'axios';
+import {Router} from 'vue-router';
 
 interface UserPlugin<S> {
   store: Store<S>;
   options: AuthOptions;
   axios?: AxiosInstance;
+  router?: Router;
 }
 
 export const injectAuth = (injectKey = 'auth'): AuthFunction | undefined =>
   inject(injectKey);
 
 export const AuthPlugin = {
-  install: (app: App, {options, axios, store}: UserPlugin<unknown>) => {
+  install: (app: App, {options, axios, store, router}: UserPlugin<unknown>) => {
     axios = axios || defaultAxios;
 
-    const storage = useStorage(options.storage.driver);
-
     const auth = createAuth(
-      store,
       merge(defaultOptions, options),
-      storage,
       axios!,
+      store,
+      router,
     );
 
     app.config.globalProperties.$auth = auth;
