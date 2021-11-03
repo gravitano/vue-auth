@@ -1,6 +1,6 @@
 import {Ref} from 'vue';
 import {AuthOptions} from './options';
-import {RouteLocationNormalized, NavigationGuardNext} from 'vue-router';
+import {RouteLocationNormalized, NavigationGuardNext, Router} from 'vue-router';
 import {AxiosInstance} from 'axios';
 import {AuthComposition} from './plugin';
 
@@ -28,4 +28,5 @@ export const registerAxiosInterceptors: (
   axios: AxiosInstance,
   options: AuthOptions,
   auth: AuthComposition,
+  router?: Router,
 ) => void;
