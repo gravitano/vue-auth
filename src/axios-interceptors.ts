@@ -6,7 +6,7 @@ export const registerAxiosInterceptors = (
   options: AuthOptions,
   auth: AuthComposition,
 ) => {
-  const {getToken} = auth;
+  const {getToken, refreshToken} = auth;
 
   axios.interceptors.request.use(
     async (config) => {
@@ -26,6 +26,10 @@ export const registerAxiosInterceptors = (
       return response;
     },
     function (error) {
+      if (error.response.status === 401) {
+        refreshToken();
+      }
+
       return Promise.reject(error);
     },
   );

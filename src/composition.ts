@@ -38,10 +38,6 @@ export const createAuth: AuthFunction = <S>(
 
   const router = useRouter();
 
-  if (options.registerAxiosInterceptors) {
-    registerAxiosInterceptors(axios, options);
-  }
-
   const setUser = (userData: AuthUser) => {
     user.value = userData;
     storage.set(options.user.storageName, userData);
@@ -56,10 +52,24 @@ export const createAuth: AuthFunction = <S>(
   const setToken = (tokenData: string) => {
     token.value = tokenData;
     storage.set(options.token.storageName, tokenData);
-
     store.commit('auth/setToken', tokenData);
 
+    setTokenExpiration(tokenData);
+
     return token;
+  };
+
+  const setTokenExpiration = (tokenData: string) => {
+    const decoded = jwtDecode<{user?: AuthUser; exp: number}>(tokenData);
+
+    if (decoded.exp) {
+      storage.set(options.expiredStorage, decoded.exp);
+      // console.info('Exp data updated!');
+    } else {
+      // console.warn('Exp data not found on token', tokenData);
+    }
+
+    return decoded;
   };
 
   const forceLogout = () => {
@@ -141,11 +151,7 @@ export const createAuth: AuthFunction = <S>(
         setTokenHeader(tokenData);
         return await fetchUser();
       } else if (options.token.autoDecode) {
-        const decoded: {user?: AuthUser; exp: number} = jwtDecode(tokenData);
-
-        if (decoded.exp) {
-          storage.set(options.expiredStorage, decoded.exp);
-        }
+        const decoded = setTokenExpiration(tokenData);
 
         const user = decoded.user || decoded;
         setUser(user);
@@ -153,10 +159,7 @@ export const createAuth: AuthFunction = <S>(
         return data;
       }
 
-      if (options.refreshToken.enabled) {
-        const refreshToken = get(data, options.refreshToken.property);
-        storage.set(options.refreshToken.storageName, refreshToken);
-      }
+      setRefreshTokenData(data);
 
       return data;
     } catch (e: any) {
@@ -171,6 +174,13 @@ export const createAuth: AuthFunction = <S>(
       return e.response?.data;
     } finally {
       loading.value = false;
+    }
+  };
+
+  const setRefreshTokenData = (data: any) => {
+    if (options.refreshToken.enabled) {
+      const refreshToken = get(data, options.refreshToken.property);
+      storage.set(options.refreshToken.storageName, refreshToken);
     }
   };
 
@@ -209,9 +219,17 @@ export const createAuth: AuthFunction = <S>(
     return storage.get(options.refreshToken.storageName);
   };
 
+  const getTokenExpirationTime = () => {
+    return storage.get<number>(options.expiredStorage);
+  };
+
   const refreshToken = async () => {
-    const expiredAt = storage.get<number>(options.expiredStorage);
+    // console.info('Refreshing token...');
+
+    const expiredAt = getTokenExpirationTime();
+    // console.log(expiredAt);
     if (!isTokenExpired(expiredAt)) {
+      // console.info('Token is not expired yet');
       return null;
     }
 
@@ -238,24 +256,23 @@ export const createAuth: AuthFunction = <S>(
         return res.data;
       }
 
-      if (options.refreshToken.autoLogout) {
-        forceLogout();
-        return router.push(options.redirect.login);
-      }
-
-      return null;
+      return handleRefreshTokenFailed(res);
     } catch (e: any) {
-      loading.value = false;
+      debugger;
       error.value = e.response?.data?.message || e.message;
 
-      if (options.refreshToken.autoLogout) {
-        forceLogout();
-        return router.push(options.redirect.login);
-      } else {
-        return e.response?.data;
-      }
+      return handleRefreshTokenFailed(e);
     } finally {
       loading.value = false;
+    }
+  };
+
+  const handleRefreshTokenFailed = (e?: any) => {
+    if (options.refreshToken.autoLogout) {
+      forceLogout();
+      return router.push(options.redirect.login);
+    } else {
+      return e?.response?.data;
     }
   };
 
@@ -270,15 +287,6 @@ export const createAuth: AuthFunction = <S>(
       message: 'OK',
     });
   };
-
-  // its component-only
-  // onErrorCaptured((err) => {
-  //   error.value = err.message;
-  // });
-
-  watch(token, () => {
-    registerAxiosInterceptors(axios, options);
-  });
 
   const storeUser = computed(() => {
     return store.getters['auth/user'] || getUser();
