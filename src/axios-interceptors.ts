@@ -55,6 +55,10 @@ export const handleRefreshToken = (
   const refreshTokenURL = normalizeURL(options.endpoints.refresh?.url!);
   const isRefreshingToken = originalRequest.url === refreshTokenURL;
 
+  if (isUnauthorized && !isRefreshingToken) {
+    return Promise.reject(error);
+  }
+
   if (isUnauthorized && isRefreshingToken) {
     const {refreshToken} = auth;
 
