@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.9](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/compare/v0.0.8...v0.0.9) (2021-11-03)
+
+
+### Features
+
+* improved refresh token logic ([c4b36ae](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/c4b36ae79396a36506cb83afad09a559ec753dc0))
+* simplify the `authModule` ([5752e0a](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/5752e0a0487f70cebb750117628cf71243b88591))
+
+
+### Bug Fixes
+
+* update plugin registration ([284e73e](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/284e73e8b2a72dd76d02788114102936c3f10a02))
+
 ### [0.0.8](https://github.com/pinteraktif/smart-akmil-web/compare/v0.0.7...v0.0.8) (2021-11-02)
 
 
