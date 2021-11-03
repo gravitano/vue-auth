@@ -32,33 +32,35 @@ export const createAuth: AuthFunction = <S>(
 
   const setUser = (userData: AuthUser) => {
     storage.set(options.user.storageName, userData);
-    store.commit('auth/setUser', userData);
+    store!.commit('auth/setUser', userData);
   };
 
   const setToken = (tokenData: string) => {
     storage.set(options.token.storageName, tokenData);
-    store.commit('auth/setToken', tokenData);
+    store!.commit('auth/setToken', tokenData);
 
     setTokenExpiration(tokenData);
   };
 
   const setTokenExpiration = (tokenData: string) => {
-    const decoded = jwtDecode<{user?: AuthUser; exp: number}>(tokenData);
+    if (options.token.autoDecode) {
+      try {
+        const decoded = jwtDecode<{user?: AuthUser; exp: number}>(tokenData);
 
-    if (decoded.exp) {
-      storage.set(options.expiredStorage, decoded.exp);
-      // console.info('Exp data updated!');
-    } else {
-      // console.warn('Exp data not found on token', tokenData);
+        if (decoded.exp) {
+          storage.set(options.expiredStorage, decoded.exp);
+          return decoded;
+        }
+      } catch {
+        return null;
+      }
     }
-
-    return decoded;
   };
 
   const forceLogout = () => {
     storage.clear(options);
 
-    store.commit('auth/logout');
+    store!.commit('auth/logout');
 
     return Promise.resolve(true);
   };
@@ -67,12 +69,12 @@ export const createAuth: AuthFunction = <S>(
     if (options.endpoints.logout) {
       try {
         loading.value = true;
-        const {data} = await axios.request(merge(options.endpoints.logout));
+        const {data} = await axios!.request(merge(options.endpoints.logout));
         loading.value = false;
 
         await forceLogout();
 
-        store.commit('auth/logout');
+        store!.commit('auth/logout');
 
         return data;
       } catch (e: any) {
@@ -89,7 +91,7 @@ export const createAuth: AuthFunction = <S>(
   const fetchUser = async () => {
     try {
       loading.value = true;
-      const res = await axios.request(merge(options.endpoints.user));
+      const res = await axios!.request(merge(options.endpoints.user));
       loading.value = false;
 
       const data = res?.data;
@@ -106,46 +108,46 @@ export const createAuth: AuthFunction = <S>(
   };
 
   const setTokenHeader = (tokenData: string) => {
-    (axios.defaults.headers as any)[
+    (axios!.defaults.headers as any)[
       options.token.name
     ] = `${options.token.type} ${tokenData}`;
   };
 
   const login = async <P = LoginPayload>(payload: P) => {
     loading.value = true;
+    error.value = '';
 
     try {
-      error.value = '';
-
-      const {data} = await axios.request(
+      const res = await axios!.request(
         merge(options.endpoints.login, {
           data: payload,
         }),
       );
 
-      const tokenData = get(data, options.token.property);
+      const tokenData = get(res.data, options.token.property);
       setToken(tokenData);
 
       if (options.user.autoFetch) {
         setTokenHeader(tokenData);
-        return await fetchUser();
+        await fetchUser();
+        return router!.push(options.redirect.home);
       } else if (options.token.autoDecode) {
         const decoded = setTokenExpiration(tokenData);
 
-        const user = decoded.user || decoded;
-        setUser(user);
+        const user = decoded?.user || decoded;
+        if (user) {
+          setUser(user);
+        }
 
-        return data;
+        return res;
       }
 
-      setRefreshTokenData(data);
+      setRefreshTokenData(res.data);
 
-      return data;
+      return res;
     } catch (e: any) {
       if (e.response) {
         error.value = e.response?.data?.message || e.message;
-      } else if (e.request) {
-        error.value = e.message;
       } else {
         error.value = e.message;
       }
@@ -247,7 +249,7 @@ export const createAuth: AuthFunction = <S>(
   const handleRefreshTokenFailed = (e?: any) => {
     if (options.refreshToken.autoLogout) {
       forceLogout();
-      return router.push(options.redirect.login);
+      return router!.push(options.redirect.login);
     } else {
       return e?.response;
     }
