@@ -37,7 +37,7 @@ export const createAuth: AuthFunction = <S = {auth: AuthState}>(
   const generateExpDate = () => {
     const currDate = new Date();
     const newDate = new Date();
-    newDate.setTime(currDate.getTime() + options.refreshToken.maxAge);
+    newDate.setTime(currDate.getTime() + options.refreshToken.maxAge * 1000);
     return newDate.getTime();
   };
 
