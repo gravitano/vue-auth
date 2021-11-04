@@ -69,9 +69,9 @@ export const handleRefreshToken = <S = AuthState>(
     } catch {
       forceLogout();
       if (router) {
-        router.push(options.redirect.login);
+        return router.push(options.redirect.login);
       }
-      return Promise.reject(error);
+      return Promise.reject(new Error('Refresh token failed'));
     }
   }
 
