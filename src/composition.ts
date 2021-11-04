@@ -34,6 +34,13 @@ export const createAuth: AuthFunction = <S = {auth: AuthState}>(
     setTokenExpiration(tokenData);
   };
 
+  const generateExpDate = () => {
+    const currDate = new Date();
+    const newDate = new Date();
+    newDate.setTime(currDate.getTime() + 30 * 60 * 1000);
+    return newDate.getTime();
+  };
+
   const setTokenExpiration = (tokenData: string) => {
     if (options.token.autoDecode) {
       try {
@@ -46,6 +53,8 @@ export const createAuth: AuthFunction = <S = {auth: AuthState}>(
       } catch {
         return null;
       }
+    } else {
+      storage.set(options.expiredStorage, generateExpDate());
     }
   };
 
@@ -204,7 +213,7 @@ export const createAuth: AuthFunction = <S = {auth: AuthState}>(
 
     const expiredAt = getTokenExpirationTime();
     // console.log(expiredAt);
-    if (!isTokenExpired(expiredAt)) {
+    if (expiredAt && !isTokenExpired(expiredAt)) {
       // console.info('Token is not expired yet');
       return null;
     }
