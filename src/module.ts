@@ -38,6 +38,7 @@ export function authModule<R>(
       logout(state) {
         state.user = null;
         state.isLoggedIn = false;
+        state.token = null;
       },
     },
     getters: {
