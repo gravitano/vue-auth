@@ -1,6 +1,6 @@
 {
   "name": "@gravitano/vue-auth",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "Authentication Plugin for Vue 3",
   "author": "Warsono <warsono16694@gmail.com>",
   "homepage": "",
