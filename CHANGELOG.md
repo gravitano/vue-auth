@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.13](https://github.com/pinteraktif/smart-akmil-web/compare/v0.0.12...v0.0.13) (2021-11-04)
+
+
+### Bug Fixes
+
+* exp date calculation ([713cf55](https://github.com/pinteraktif/smart-akmil-web/commit/713cf5563bf3ba7e7041a2b60041affef80519ad))
+* refresh token flow and maxAge ([f106fd2](https://github.com/pinteraktif/smart-akmil-web/commit/f106fd2982424abd56e5f7e3c290d9fbadb870a2))
+
 ### [0.0.12](https://git.gits.id/frontend/starter/vue-3/starter/compare/v0.0.11...v0.0.12) (2021-11-04)
 
 
