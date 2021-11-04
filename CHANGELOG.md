@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.11](https://git.gits.id/frontend/starter/vue-3/starter/compare/v0.0.10...v0.0.11) (2021-11-04)
+
+
+### Bug Fixes
+
+* clear token data when logout ([492f1bf](https://git.gits.id/frontend/starter/vue-3/starter/commit/492f1bfc243e48b3cce6ce57953943e4c4e61faf))
+* force logout ([0936da9](https://git.gits.id/frontend/starter/vue-3/starter/commit/0936da969ac0adcf5cc0b547ced930fde40ba56d))
+* reject request when not refreshing token ([3df032f](https://git.gits.id/frontend/starter/vue-3/starter/commit/3df032fe51f72aa9617137b2c1c6a17e3276ef47))
+* replace getters with state ([fa45f4d](https://git.gits.id/frontend/starter/vue-3/starter/commit/fa45f4d65a504accb69af8d85ebe7ab9b9f685d5))
+
 ### [0.0.10](https://git.gits.id/frontend/starter/vue-3/starter/compare/v0.0.2-alpha.1...v0.0.10) (2021-11-03)
 
 
