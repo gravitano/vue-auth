@@ -46,6 +46,8 @@ export const normalizeURL = (url: string) => {
   return String(url).startsWith('/') ? url.substr(1) : url;
 };
 
+let retryCount = 0;
+
 export const handleRefreshToken = <S = AuthState>(
   error: any,
   options: AuthOptions,
@@ -56,24 +58,25 @@ export const handleRefreshToken = <S = AuthState>(
   const originalRequest = error.config;
   const isUnauthorized = error.response.status === 401;
   const refreshTokenURL = normalizeURL(options.endpoints.refresh?.url!);
-  const isRefreshingToken = originalRequest.url === refreshTokenURL;
+  const isRefreshingToken =
+    normalizeURL(originalRequest.url) === refreshTokenURL;
   const {refreshToken, forceLogout} = createAuth(options, store, router, axios);
 
-  // if (isUnauthorized && !isRefreshingToken) {
-  //   forceLogout();
-  //   return Promise.reject(error);
-  // }
+  if (isUnauthorized && !isRefreshingToken) {
+    forceLogout();
+    router.push(options.redirect.login);
+    return error;
+  }
 
-  if (isUnauthorized) {
-    try {
-      return refreshToken();
-    } catch {
-      forceLogout();
-      if (router) {
-        return router.push(options.redirect.login);
-      }
-      return Promise.reject(new Error('Refresh token failed'));
-    }
+  if (retryCount > 0) {
+    return new Error('Refresh exceed maximum catches!');
+  }
+
+  if (isUnauthorized && !originalRequest._retry) {
+    retryCount++;
+    originalRequest._retry = true;
+
+    return refreshToken();
   }
 
   return Promise.reject(error);

@@ -209,12 +209,8 @@ export const createAuth: AuthFunction = <S = {auth: AuthState}>(
   };
 
   const refreshToken = async () => {
-    // console.info('Refreshing token...');
-
     const expiredAt = getTokenExpirationTime();
-    // console.log(expiredAt);
     if (expiredAt && !isTokenExpired(expiredAt)) {
-      // console.info('Token is not expired yet');
       return null;
     }
 
@@ -240,11 +236,7 @@ export const createAuth: AuthFunction = <S = {auth: AuthState}>(
 
         return res.data;
       }
-
-      return handleRefreshTokenFailed(res);
     } catch (e: any) {
-      error.value = e.response?.data?.message || e.message;
-
       return handleRefreshTokenFailed(e);
     } finally {
       loading.value = false;
@@ -254,10 +246,10 @@ export const createAuth: AuthFunction = <S = {auth: AuthState}>(
   const handleRefreshTokenFailed = (e?: any) => {
     if (options.refreshToken.autoLogout) {
       forceLogout();
-      return router!.push(options.redirect.login);
-    } else {
-      return e?.response;
+      router!.push(options.redirect.login);
     }
+
+    return e;
   };
 
   const loginAs = <U = AuthUser>(user: U, token: string) => {
