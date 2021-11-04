@@ -37,8 +37,12 @@ export const createAuth: AuthFunction = <S = {auth: AuthState}>(
   const generateExpDate = () => {
     const currDate = new Date();
     const newDate = new Date();
-    newDate.setTime(currDate.getTime() + 30 * 60 * 1000);
+    newDate.setTime(currDate.getTime() + options.refreshToken.maxAge);
     return newDate.getTime();
+  };
+
+  const setExp = () => {
+    storage.set(options.expiredStorage, generateExpDate());
   };
 
   const setTokenExpiration = (tokenData: string) => {
@@ -49,12 +53,14 @@ export const createAuth: AuthFunction = <S = {auth: AuthState}>(
         if (decoded.exp) {
           storage.set(options.expiredStorage, decoded.exp);
           return decoded;
+        } else {
+          setExp();
         }
       } catch {
-        return null;
+        setExp();
       }
     } else {
-      storage.set(options.expiredStorage, generateExpDate());
+      setExp();
     }
   };
 
@@ -128,6 +134,8 @@ export const createAuth: AuthFunction = <S = {auth: AuthState}>(
       const tokenData = get(res.data, options.token.property);
       setToken(tokenData);
 
+      setRefreshTokenData(res.data);
+
       if (options.user.autoFetch) {
         setTokenHeader(tokenData);
         await fetchUser();
@@ -143,12 +151,13 @@ export const createAuth: AuthFunction = <S = {auth: AuthState}>(
         return res;
       }
 
-      setRefreshTokenData(res.data);
-
       return res;
     } catch (e: any) {
       if (e.response) {
-        error.value = e.response?.data?.message || e.message;
+        error.value =
+          e.response?.data?.message ||
+          e.response?.data?.error?.message ||
+          e.message;
       } else {
         error.value = e.message;
       }
