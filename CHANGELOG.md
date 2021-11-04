@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.12](https://git.gits.id/frontend/starter/vue-3/starter/compare/v0.0.11...v0.0.12) (2021-11-04)
+
+
+### Bug Fixes
+
+* refresh token infinite loop ([c172253](https://git.gits.id/frontend/starter/vue-3/starter/commit/c1722530922b0535b9e5c118c17a25cf9538f7cf))
+* return router and fix infinite catch looping ([428cee3](https://git.gits.id/frontend/starter/vue-3/starter/commit/428cee344eb772959a3dc2876a1208a5e098d304))
+* rework refresh token flow ([f33fed9](https://git.gits.id/frontend/starter/vue-3/starter/commit/f33fed9f42b7dcf1f26a8ff69ec495ac54c9f95e))
+
 ### [0.0.11](https://git.gits.id/frontend/starter/vue-3/starter/compare/v0.0.10...v0.0.11) (2021-11-04)
 
 
