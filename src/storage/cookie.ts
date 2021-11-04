@@ -23,5 +23,6 @@ export class CookieStorage implements AuthStorage {
     Cookies.remove(options?.token?.storageName!, options?.cookie);
     Cookies.remove(options?.user?.storageName!, options?.cookie);
     Cookies.remove(options?.expiredStorage!, options?.cookie);
+    Cookies.remove(options?.refreshToken.storageName!, options?.cookie);
   }
 }
