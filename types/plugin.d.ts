@@ -43,13 +43,14 @@ export type AuthComposition = {
   getUser: () => AuthUser;
   getToken: () => Promise<string>;
   getRefreshToken: () => string;
+  getLocalUser(): AuthUser;
 };
 
 export type AuthFunction = <S>(
   options: AuthOptions,
-  axios?: AxiosInstance,
-  store?: Store<S>,
-  router?: Router,
+  store: Store<S>,
+  router: Router,
+  axios: AxiosInstance,
 ) => AuthComposition;
 
 export const createAuth: AuthFunction;

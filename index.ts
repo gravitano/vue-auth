@@ -5,4 +5,6 @@ export * from './src/plugin';
 export * from './src/module';
 export * from './src/options';
 export * from './src/middleware';
+export * from './src/refresh-token';
+export * from './src/token-status';
 // export * from './types';

@@ -1,14 +1,16 @@
-import {AuthComposition} from './../types/plugin.d';
+import {useRefreshToken} from './refresh-token';
+import {AuthState} from './module';
 import {AxiosInstance} from 'axios';
 import {Router} from 'vue-router';
 import {AuthOptions} from '../types/index';
 import {useStorage} from './storage';
+import {Store} from 'vuex';
 
-export const registerAxiosInterceptors = (
+export const registerAxiosInterceptors = <S = AuthState>(
   axios: AxiosInstance,
   options: AuthOptions,
-  auth: AuthComposition,
-  router?: Router,
+  store: Store<S>,
+  router: Router,
 ) => {
   axios.interceptors.request.use(
     async (config) => {
@@ -32,7 +34,7 @@ export const registerAxiosInterceptors = (
     },
     function (error) {
       if (options.refreshToken?.enabled) {
-        return handleRefreshToken(error, options, auth, router);
+        return handleRefreshToken(error, options, store, router);
       } else {
         return Promise.reject(error);
       }
@@ -44,17 +46,17 @@ export const normalizeURL = (url: string) => {
   return String(url).startsWith('/') ? url.substr(1) : url;
 };
 
-export const handleRefreshToken = (
+export const handleRefreshToken = <S = AuthState>(
   error: any,
   options: AuthOptions,
-  auth: AuthComposition,
-  router?: Router,
+  store: Store<S>,
+  router: Router,
 ) => {
   const originalRequest = error.config;
   const isUnauthorized = error.response.status === 401;
   const refreshTokenURL = normalizeURL(options.endpoints.refresh?.url!);
   const isRefreshingToken = originalRequest.url === refreshTokenURL;
-  const {refreshToken, forceLogout} = auth;
+  const {refreshToken, forceLogout} = useRefreshToken(options, store, router);
 
   if (isUnauthorized && !isRefreshingToken) {
     forceLogout();

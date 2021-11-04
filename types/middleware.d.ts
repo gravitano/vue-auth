@@ -1,3 +1,5 @@
+import {AuthState} from './../src/module';
+import {Store} from 'vuex';
 import {Ref} from 'vue';
 import {AuthOptions} from './options';
 import {RouteLocationNormalized, NavigationGuardNext, Router} from 'vue-router';
@@ -24,9 +26,9 @@ export const guestMiddleware: ({
   options,
 }: MiddlewareParams) => void;
 
-export const registerAxiosInterceptors: (
+export const registerAxiosInterceptors: <S = AuthState>(
   axios: AxiosInstance,
   options: AuthOptions,
-  auth: AuthComposition,
-  router?: Router,
+  store: Store<S>,
+  router: Router,
 ) => void;

@@ -1,31 +1,22 @@
 import {computed, ref} from 'vue';
-import defaultAxios, {AxiosInstance} from 'axios';
+import {AxiosInstance} from 'axios';
 import merge from 'lodash/merge';
 import get from 'lodash/get';
 import jwtDecode from 'jwt-decode';
 import {AuthFunction, AuthUser, LoginPayload} from '../types/index';
-import {Store, useStore} from 'vuex';
+import {Store} from 'vuex';
 import {defaultOptions} from './options';
 import {isTokenExpired} from './token-status';
-import {Router, useRouter} from 'vue-router';
+import {Router} from 'vue-router';
 import {useStorage} from './storage';
 import {AuthState} from './module';
 
 export const createAuth: AuthFunction = <S = {auth: AuthState}>(
   options = defaultOptions,
-  axios?: AxiosInstance,
-  store?: Store<S>,
-  router?: Router,
+  store: Store<S>,
+  router: Router,
+  axios: AxiosInstance,
 ) => {
-  axios =
-    axios ||
-    defaultAxios.create({
-      baseURL: options.baseURL,
-    });
-
-  store = store || useStore();
-  router = router || useRouter();
-
   const storage = useStorage(options.storage.driver);
 
   const error = ref('');
@@ -33,12 +24,12 @@ export const createAuth: AuthFunction = <S = {auth: AuthState}>(
 
   const setUser = (userData: AuthUser) => {
     storage.set(options.user.storageName, userData);
-    store!.commit('auth/setUser', userData);
+    store.commit('auth/setUser', userData);
   };
 
   const setToken = (tokenData: string) => {
     storage.set(options.token.storageName, tokenData);
-    store!.commit('auth/setToken', tokenData);
+    store.commit('auth/setToken', tokenData);
 
     setTokenExpiration(tokenData);
   };
@@ -61,7 +52,7 @@ export const createAuth: AuthFunction = <S = {auth: AuthState}>(
   const forceLogout = () => {
     storage.clear(options);
 
-    store!.commit('auth/logout');
+    store.commit('auth/logout');
 
     return Promise.resolve(true);
   };
@@ -166,11 +157,15 @@ export const createAuth: AuthFunction = <S = {auth: AuthState}>(
     }
   };
 
+  const getLocalUser = <T = AuthUser>() => {
+    return storage.get<T>(options.user.storageName);
+  };
+
   const getUser = async () => {
     if (options.user.autoFetch) {
       return fetchUser();
     } else {
-      return storage.get(options.user.storageName);
+      return getLocalUser();
     }
   };
 
@@ -268,11 +263,11 @@ export const createAuth: AuthFunction = <S = {auth: AuthState}>(
     });
   };
 
-  const user = computed(() => store!.state.auth.user);
+  const loggedIn = computed(() => store.getters['auth/isLoggedIn']);
 
-  const token = computed(() => store!.state.auth.token);
+  const user = computed(() => store.getters['auth/user']);
 
-  const loggedIn = computed(() => store!.state.auth.isLoggedIn);
+  const token = computed(() => store.getters['auth/token']);
 
   return {
     loggedIn,
@@ -299,5 +294,6 @@ export const createAuth: AuthFunction = <S = {auth: AuthState}>(
     handleRefreshTokenFailed,
     getTokenExpirationTime,
     setRefreshTokenData,
+    getLocalUser,
   };
 };
