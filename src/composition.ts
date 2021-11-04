@@ -9,8 +9,9 @@ import {defaultOptions} from './options';
 import {isTokenExpired} from './token-status';
 import {Router, useRouter} from 'vue-router';
 import {useStorage} from './storage';
+import {AuthState} from './module';
 
-export const createAuth: AuthFunction = <S>(
+export const createAuth: AuthFunction = <S = {auth: AuthState}>(
   options = defaultOptions,
   axios?: AxiosInstance,
   store?: Store<S>,
@@ -267,17 +268,11 @@ export const createAuth: AuthFunction = <S>(
     });
   };
 
-  const user = computed(() => {
-    return store?.getters['auth/user'] || getUser();
-  });
+  const user = computed(() => store!.state.auth.user);
 
-  const token = computed(() => {
-    return store?.getters['auth/token'];
-  });
+  const token = computed(() => store!.state.auth.token);
 
-  const loggedIn = computed(() => {
-    return store?.getters['auth/isLoggedIn'];
-  });
+  const loggedIn = computed(() => store!.state.auth.isLoggedIn);
 
   return {
     loggedIn,
