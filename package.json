@@ -34,15 +34,6 @@
     "typescript": "^4.4.4",
     "vite": "^2.6.13"
   },
-  "main": "dist/vue-auth.es.js",
-  "unpkg": "dist/vue-auth.iife.js",
-  "jsdelivr": "dist/vue-auth.iife.js",
-  "module": "dist/vue-auth.es.js",
-  "exports": {
-    ".": {
-      "import": "./dist/vue-auth.es.js",
-      "require": "./dist/vue-auth.umd.js"
-    }
-  },
+  "main": "index.ts",
   "types": "./dist/types/index.d.ts"
 }
