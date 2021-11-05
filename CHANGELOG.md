@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.1.0](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/compare/v0.0.15...v0.1.0) (2021-11-05)
+
+
+### Features
+
+* improved typing ([d7ea3ed](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/d7ea3ed643f2b3cbb4d3b08b3135568fd62ac4bd))
+
 ### [0.0.15](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/compare/v0.0.14...v0.0.15) (2021-11-05)
 
 
