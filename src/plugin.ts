@@ -1,7 +1,7 @@
 import {inject, App} from 'vue';
 import {createAuth} from './composition';
 import merge from 'lodash/merge';
-import {AuthFunction, AuthOptions} from '../types/index';
+import {AuthFunction, AuthOptions} from './types/index';
 import {Store} from 'vuex';
 import {defaultOptions} from './options';
 import {AxiosInstance} from 'axios';

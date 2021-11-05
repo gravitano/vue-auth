@@ -1,7 +1,6 @@
-import {ComputedRef, Ref} from 'vue';
+import {Ref} from 'vue';
 import {Store} from 'vuex';
 import {AuthOptions} from './options';
-import {AuthStorage} from './storage';
 import {AxiosInstance} from 'axios';
 import {Router} from 'vue-router';
 
@@ -52,5 +51,3 @@ export type AuthFunction = <S>(
   router: Router,
   axios: AxiosInstance,
 ) => AuthComposition;
-
-export const createAuth: AuthFunction;

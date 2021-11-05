@@ -1,4 +1,4 @@
-import {MiddlewareParams} from '../../types';
+import {MiddlewareParams} from '../types';
 
 export const guestMiddleware = ({
   loggedIn,

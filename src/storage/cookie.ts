@@ -1,4 +1,4 @@
-import {AuthStorage, AuthOptions} from '../../types/index';
+import {AuthStorage, AuthOptions} from '../types/index';
 import Cookies from 'js-cookie';
 
 export class CookieStorage implements AuthStorage {

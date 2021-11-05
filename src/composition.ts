@@ -3,7 +3,7 @@ import {AxiosInstance} from 'axios';
 import merge from 'lodash/merge';
 import get from 'lodash/get';
 import jwtDecode from 'jwt-decode';
-import {AuthFunction, AuthUser, LoginPayload} from '../types/index';
+import {AuthFunction, AuthUser, LoginPayload} from './types/index';
 import {Store} from 'vuex';
 import {defaultOptions} from './options';
 import {isTokenExpired} from './token-status';

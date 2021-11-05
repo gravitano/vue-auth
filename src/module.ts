@@ -1,4 +1,4 @@
-import {AuthOptions, AuthUser} from '../types';
+import {AuthOptions, AuthUser} from './types';
 import {Module} from 'vuex';
 import {useStorage} from './storage';
 

@@ -1,4 +1,4 @@
-import {AuthOptions} from '../types';
+import {AuthOptions} from './types';
 
 export const defaultOptions: AuthOptions = {
   endpoints: {
