@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.4](https://git.gits.id/frontend/starter/vue-3/starter/compare/v0.1.3...v0.1.4) (2021-11-05)
+
+
+### Bug Fixes
+
+* disable refresh token when error from login page ([cb8af87](https://git.gits.id/frontend/starter/vue-3/starter/commit/cb8af8762f4983cb86e4a057ae8421552c09261f))
+* force logout user when failed to refresh token ([5b268d2](https://git.gits.id/frontend/starter/vue-3/starter/commit/5b268d2d586ca721f7e6bd9a6dd67d05d8362c18))
+
 ### [0.1.3](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/compare/v0.1.2...v0.1.3) (2021-11-05)
 
 
