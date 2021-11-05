@@ -4,6 +4,7 @@
 
 - [Auth](#auth)
   - [Demo](#demo)
+  - [Dependencies](#dependencies)
   - [Installation](#installation)
   - [Usage](#usage)
     - [Use as Vue Plugin](#use-as-vue-plugin)
@@ -41,6 +42,14 @@
 
 - Checkout online demo [here](https://vue-auth-demo.vercel.app/)
 - View example project [here](https://github.com/gravitano/volar-starter)
+
+## Dependencies
+
+- [axios](https://github.com/axios/axios): Used as the default http client.
+- [Vuex](https://next.vuex.vuejs.org/): Used to store auth `state`.
+- [Vou Router](https://next.vuex.vuejs.org/): Used to redirect between pages.
+- [TypeScript](https://www.typescriptlang.org/): Written in TypeScript, optimize for Vue + TypeScript. But, also ship ESM and Common JS version on `dist`. 
+
 
 ## Installation
 
