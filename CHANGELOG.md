@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.3](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/compare/v0.1.2...v0.1.3) (2021-11-05)
+
+
+### Bug Fixes
+
+* rework refresh token flow ([5ea1cd2](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/5ea1cd27959a44cb920236c6b80ae8afcfabfea5))
+
 ### [0.1.2](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/compare/v0.1.1...v0.1.2) (2021-11-05)
 
 
