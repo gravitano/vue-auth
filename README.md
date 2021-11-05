@@ -28,6 +28,13 @@
     - [`registerAxiosInterceptors`](#registeraxiosinterceptors)
     - [`storage`](#storage)
   - [Implementing Refresh Token](#implementing-refresh-token)
+    - [Refresh Token Options](#refresh-token-options)
+      - [`enabled`](#enabled)
+      - [`property`](#property)
+      - [`maxAge`](#maxage)
+      - [`storageName`](#storagename)
+      - [`name`](#name)
+      - [`autoLogout`](#autologout)
   - [License](#license)
 
 ## Demo
@@ -402,7 +409,50 @@ export const defaultOptions: AuthOptions = {
 };
 ```
 
-2.
+### Refresh Token Options
+
+#### `enabled`
+
+Indicates the refresh token is enabled or not.
+
+- Type: `string`
+- Default: `false`
+
+
+#### `property`
+
+Path of refresh token property from the response.
+
+- Type: `string`
+- Default: `data.refresh_token`
+
+#### `maxAge`
+
+Maximum age of new token.
+
+- Type: `number`
+- Default: `60 * 60 * 24 * 30` (30 Days)
+
+#### `storageName`
+
+Storage name for storing refresh token data.
+
+- Type: `string`
+- Default: `auth.refresh_token`
+
+#### `name`
+
+Payload name to sent when refreshing token. 
+
+- Type: `string`
+- Default: `refresh_token`
+
+#### `autoLogout`
+
+When `true`, user will forced to logout and login again when refresh token failed.
+
+- Type: `boolean`
+- Default: `true`
 
 ## License
 
