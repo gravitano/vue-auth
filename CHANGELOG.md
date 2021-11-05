@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.1](https://git.gits.id/frontend/starter/vue-3/starter/compare/v0.1.0...v0.1.1) (2021-11-05)
+
+
+### Features
+
+* export src/tyles ([ea8588c](https://git.gits.id/frontend/starter/vue-3/starter/commit/ea8588c411b1510c4c0bb9138765feef4168c640))
+
 ## [0.1.0](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/compare/v0.0.15...v0.1.0) (2021-11-05)
 
 
