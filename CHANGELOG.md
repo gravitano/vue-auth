@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.2](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/compare/v0.1.1...v0.1.2) (2021-11-05)
+
+
+### Bug Fixes
+
+* uses index.ts as main entry point for now ([475c820](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/475c820036b01e239db851bf2c09dacf554db8f8))
+
 ### [0.1.1](https://git.gits.id/frontend/starter/vue-3/starter/compare/v0.1.0...v0.1.1) (2021-11-05)
 
 
