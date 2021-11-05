@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.5](https://git.gits.id/frontend/starter/vue-3/starter/compare/v0.1.4...v0.1.5) (2021-11-05)
+
+
+### Bug Fixes
+
+* require lodash ([19227a8](https://git.gits.id/frontend/starter/vue-3/starter/commit/19227a8ec6fffea6a7bada9a583bafd8f5f9d87e))
+
 ### [0.1.4](https://git.gits.id/frontend/starter/vue-3/starter/compare/v0.1.3...v0.1.4) (2021-11-05)
 
 
