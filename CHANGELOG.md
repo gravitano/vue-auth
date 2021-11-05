@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.15](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/compare/v0.0.14...v0.0.15) (2021-11-05)
+
+
+### Bug Fixes
+
+* plugin registration ([869c754](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/869c754c3edb2f51d1ef37a3772e5b4f43815a51))
+
 ### [0.0.14](https://github.com/pinteraktif/smart-akmil-web/compare/v0.0.13...v0.0.14) (2021-11-04)
 
 
