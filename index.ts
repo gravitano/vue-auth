@@ -6,4 +6,4 @@ export * from './src/module';
 export * from './src/options';
 export * from './src/middleware';
 export * from './src/token-status';
-// export * from './types';
+export * from './src/types';
