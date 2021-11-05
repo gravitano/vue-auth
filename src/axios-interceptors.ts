@@ -67,10 +67,13 @@ export const registerAxiosInterceptors = <S = AuthState>(
         return Promise.reject(error);
       }
 
+      const isLogin =
+        originalRequestUrl === normalizeURL(options.endpoints.login.url!);
       if (
         error.response.status === 401 &&
         !originalRequest._retry &&
-        options.refreshToken.enabled
+        options.refreshToken.enabled &&
+        !isLogin
       ) {
         originalRequest._retry = true;
 
