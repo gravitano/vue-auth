@@ -18,7 +18,7 @@ export const registerAxiosInterceptors = <S = AuthState>(
   router: Router,
 ) => {
   const storage = useStorage(options.storage.driver);
-  const {setToken, getRefreshToken, setTokenHeader} = createAuth(
+  const {setToken, getRefreshToken, setTokenHeader, forceLogout} = createAuth(
     options,
     store,
     router,
@@ -58,6 +58,7 @@ export const registerAxiosInterceptors = <S = AuthState>(
         originalRequestUrl === refreshTokenUrl &&
         options.refreshToken.autoLogout
       ) {
+        forceLogout();
         router.push({
           path: options.redirect.login,
           query: {
