@@ -11,8 +11,8 @@ import {Router} from 'vue-router';
 interface UserPlugin<S> {
   store: Store<S>;
   options: AuthOptions;
-  axios?: AxiosInstance;
-  router?: Router;
+  router: Router;
+  axios: AxiosInstance;
 }
 
 export const injectAuth = (injectKey = 'auth'): AuthFunction | undefined =>
@@ -24,9 +24,9 @@ export const AuthPlugin = {
 
     const auth = createAuth(
       merge(defaultOptions, options),
-      axios!,
       store,
       router,
+      axios,
     );
 
     app.config.globalProperties.$auth = auth;

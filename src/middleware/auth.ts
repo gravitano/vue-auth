@@ -5,7 +5,7 @@ export const requiresAuthMiddleware = ({
   next,
   options,
 }: MiddlewareParams) => {
-  if (!loggedIn.value) {
+  if (!loggedIn?.value) {
     next(options.redirect.login);
   } else {
     next();

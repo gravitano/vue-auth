@@ -5,7 +5,7 @@ export const guestMiddleware = ({
   next,
   options,
 }: MiddlewareParams) => {
-  if (loggedIn.value) {
+  if (loggedIn?.value) {
     next(options.redirect.home);
   } else {
     next();
