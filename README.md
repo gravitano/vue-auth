@@ -27,8 +27,7 @@
     - [`redirect`](#redirect)
     - [`registerAxiosInterceptors`](#registeraxiosinterceptors)
     - [`storage`](#storage)
-    - [`refreshToken`](#refreshtoken)
-      - [Default Options](#default-options-1)
+  - [Implementing Refresh Token](#implementing-refresh-token)
   - [License](#license)
 
 ## Demo
@@ -213,7 +212,7 @@ console.log(user); // <-- user data
 This is the default options object:
 
 ```ts
-import { AuthOptions } from '@gravitano/vue-auth/types'
+import { AuthOptions } from '@gravitano/vue-auth'
 
 export const defaultOptions: AuthOptions = {
   endpoints: {
@@ -343,22 +342,67 @@ export const defaultOptions: AuthOptions = {
   - Available Options: `local` | `secureLs` | `cookie`
 
 
-### `refreshToken`
+## Implementing Refresh Token
 
-If you want to enable refresh token feature, first add the `refreshToken` options to the current `authOptions` and make sure the `refreshToken.enabled` is set to true.
-#### Default Options
+To implement refresh token, update your auth options like so:
 
-```ts
-  // ...
-  refreshToken: {
-    enabled: false,
-    property: 'data',
-    maxAge: 60 * 60 * 24 * 30, // default 30 days
-    storageName: 'auth.refresh_token',
-    name: 'refresh_token',
-    autoLogout: true,
+```diff
+
+import { AuthOptions } from '@gravitano/vue-auth/types'
+
+export const defaultOptions: AuthOptions = {
+  endpoints: {
+    login: {
+      url: '/auth/login',
+      method: 'post',
+    },
+    logout: {
+      url: '/auth/logout',
+      method: 'delete',
+    },
+    user: {
+      url: '/auth/me',
+      method: 'get',
+    },
++    refresh: {
++      url: '/auth/refresh_token',
++      method: 'get',
++    },
   },
+  token: {
+    property: 'data.token',
+    type: 'Bearer',
+    storageName: 'auth.token',
+    autoDecode: false,
+    name: 'Authorization',
+  },
+  user: {
+    autoFetch: true,
+    property: 'data',
+    storageName: 'auth.user',
+  },
+  moduleName: 'auth',
+  expiredStorage: 'auth.expired',
+  redirect: {
+    home: '/',
+    login: '/auth/login',
+  },
+  registerAxiosInterceptors: true,
+  storage: {
+    driver: 'secureLs', // supported: cookie, local, secureLs (secure local storage)
+  },
++  refreshToken: {
++    enabled: true, // <-- make sure the value is set to true
++    property: 'data',
++    maxAge: 60 * 60 * 24 * 30, // default 30 days
++    storageName: 'auth.refresh_token',
++    name: 'refresh_token',
++    autoLogout: true,
++  },
+};
 ```
+
+2.
 
 ## License
 
