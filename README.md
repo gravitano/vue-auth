@@ -364,7 +364,7 @@ To implement refresh token, update your auth options like so:
 
 ```diff
 
-import { AuthOptions } from '@gravitano/vue-auth/types'
+import { AuthOptions } from '@gravitano/vue-auth'
 
 export const defaultOptions: AuthOptions = {
   endpoints: {
