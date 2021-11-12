@@ -72,23 +72,26 @@ export const createAuth: AuthFunction = <S = {auth: AuthState}>(
     return Promise.resolve(true);
   };
 
-  const logout = async () => {
+  const logout = async <T = Record<string, any>>(payload?: T) => {
+    loading.value = true;
+
     if (options.endpoints.logout) {
       try {
-        loading.value = true;
-        const {data} = await axios!.request(merge(options.endpoints.logout));
-        loading.value = false;
+        const {data} = await axios.request(
+          merge(options.endpoints.logout, {
+            data: payload,
+          }),
+        );
 
         await forceLogout();
 
-        store!.commit('auth/logout');
-
         return data;
       } catch (e: any) {
-        loading.value = false;
         error.value = e.response?.data?.message || e.message;
 
         return e.response;
+      } finally {
+        loading.value = false;
       }
     } else {
       return await forceLogout();
