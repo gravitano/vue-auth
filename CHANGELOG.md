@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.6](https://github.com/pinteraktif/smart-akmil-web/compare/v0.1.5...v0.1.6) (2021-11-12)
+
+
+### Features
+
+* allow to send extra payload to logout method ([c875622](https://github.com/pinteraktif/smart-akmil-web/commit/c875622bbccccc275ab6471e386090b863706a54))
+
+
+### Bug Fixes
+
+* type path ([0083f54](https://github.com/pinteraktif/smart-akmil-web/commit/0083f545e37b344eca928e04ffd312d41f687846))
+
 ### [0.1.5](https://git.gits.id/frontend/starter/vue-3/starter/compare/v0.1.4...v0.1.5) (2021-11-05)
 
 
