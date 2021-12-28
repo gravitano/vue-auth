@@ -1,22 +1,22 @@
-import {AuthState} from './module';
+import {StoreDefinition} from 'pinia';
 import {AxiosInstance} from 'axios';
-import {Router} from 'vue-router';
-import {AuthOptions} from '../types';
+import {AuthOptions} from './types/index';
 import {useStorage} from './storage';
-import {createAuth} from './auth';
+import get from 'lodash/get';
+import {Router} from 'vue-router';
+
+export const normalizeURL = (url: string) => {
+  return String(url).startsWith('/') ? url.substr(1) : url;
+};
 
 export const registerAxiosInterceptors = (
   axios: AxiosInstance,
   options: AuthOptions,
   router: Router,
+  useAuth: StoreDefinition,
 ) => {
   const storage = useStorage(options.storage.driver);
-  const {setToken, getRefreshToken, setTokenHeader, forceLogout} = createAuth(
-    options,
-    store,
-    router,
-    axios,
-  );
+  const auth = useAuth();
 
   const getAccessToken = () => {
     return storage.get(options.token.storageName);
@@ -41,9 +41,23 @@ export const registerAxiosInterceptors = (
       return response;
     },
     function (error) {
-      if (options.refreshToken?.enabled) {
-        return handleRefreshToken(error, options, router);
-      } else {
+      const originalRequest = error.config;
+
+      const originalRequestUrl = normalizeURL(originalRequest.url);
+      const refreshTokenUrl = normalizeURL(options.endpoints.refresh?.url!);
+
+      if (
+        error.response.status === 401 &&
+        originalRequestUrl === refreshTokenUrl &&
+        options.refreshToken.autoLogout
+      ) {
+        auth.forceLogout();
+        router.push({
+          path: options.redirect.login,
+          query: {
+            failed_refresh_token: 1,
+          },
+        });
         return Promise.reject(error);
       }
 
@@ -61,14 +75,14 @@ export const registerAxiosInterceptors = (
           .request({
             ...options.endpoints.refresh,
             data: {
-              [options.refreshToken.name]: getRefreshToken(),
+              [options.refreshToken.name]: auth.getRefreshToken(),
             },
           })
           .then((res) => {
             if (res.status === 200) {
               const newToken = get(res.data, options.token.property);
-              setToken(newToken);
-              setTokenHeader(newToken);
+              auth.setToken(newToken);
+              auth.setTokenHeader(newToken);
               return axios(originalRequest);
             }
           });
@@ -77,43 +91,4 @@ export const registerAxiosInterceptors = (
       return Promise.reject(error);
     },
   );
-};
-
-export const normalizeURL = (url: string) => {
-  return String(url).startsWith('/') ? url.substr(1) : url;
-};
-
-let retryCount = 0;
-
-export const handleRefreshToken = <S = AuthState>(
-  error: any,
-  options: AuthOptions,
-  router: Router,
-) => {
-  const originalRequest = error.config;
-  const isUnauthorized = error.response.status === 401;
-  const refreshTokenURL = normalizeURL(options.endpoints.refresh?.url!);
-  const isRefreshingToken =
-    normalizeURL(originalRequest.url) === refreshTokenURL;
-  const useAuth = createAuth(options, router);
-  const auth = useAuth();
-
-  if (isUnauthorized && !isRefreshingToken) {
-    auth.forceLogout();
-    router.push(options.redirect.login);
-    return error;
-  }
-
-  if (retryCount > 0) {
-    return new Error('Refresh exceed maximum catches!');
-  }
-
-  if (isUnauthorized && !originalRequest._retry) {
-    retryCount++;
-    originalRequest._retry = true;
-
-    return auth.refreshToken();
-  }
-
-  return Promise.reject(error);
 };
