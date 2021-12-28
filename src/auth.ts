@@ -1,4 +1,4 @@
-import {AuthOptions, AuthUser, LoginPayload} from '../types';
+import {AuthOptions, AuthUser, LoginPayload} from './types';
 import {isTokenExpired} from './token-status';
 import {useStorage} from './storage';
 import jwtDecode from 'jwt-decode';
