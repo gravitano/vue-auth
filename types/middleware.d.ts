@@ -29,6 +29,5 @@ export const guestMiddleware: ({
 export const registerAxiosInterceptors: <S = AuthState>(
   axios: AxiosInstance,
   options: AuthOptions,
-  store: Store<S>,
   router: Router,
 ) => void;

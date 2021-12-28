@@ -46,9 +46,8 @@ export type AuthComposition = {
   getLocalUser(): AuthUser;
 };
 
-export type AuthFunction = <S>(
+export type AuthFunction = (
   options: AuthOptions,
-  store: Store<S>,
   router: Router,
   axios: AxiosInstance,
 ) => AuthComposition;
