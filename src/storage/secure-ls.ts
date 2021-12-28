@@ -1,5 +1,5 @@
 import SecureLS from 'secure-ls';
-import {AuthStorage} from '../../types/index';
+import {AuthStorage} from '../types/index';
 
 export class SecureLocalStorage implements AuthStorage {
   protected _ls: SecureLS;

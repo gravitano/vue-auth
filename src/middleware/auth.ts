@@ -1,11 +1,11 @@
-import {MiddlewareParams} from '../../types';
+import {MiddlewareParams} from '../types';
 
 export const requiresAuthMiddleware = ({
   loggedIn,
   next,
   options,
 }: MiddlewareParams) => {
-  if (!loggedIn.value) {
+  if (!loggedIn?.value) {
     next(options.redirect.login);
   } else {
     next();

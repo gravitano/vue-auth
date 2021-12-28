@@ -3,7 +3,7 @@ import {AxiosInstance} from 'axios';
 import merge from 'lodash/merge';
 import get from 'lodash/get';
 import jwtDecode from 'jwt-decode';
-import {AuthFunction, AuthUser, LoginPayload} from '../types/index';
+import {AuthFunction, AuthUser, LoginPayload} from './types/index';
 import {Store} from 'vuex';
 import {defaultOptions} from './options';
 import {isTokenExpired} from './token-status';
@@ -37,8 +37,12 @@ export const createAuth: AuthFunction = <S = {auth: AuthState}>(
   const generateExpDate = () => {
     const currDate = new Date();
     const newDate = new Date();
-    newDate.setTime(currDate.getTime() + 30 * 60 * 1000);
+    newDate.setTime(currDate.getTime() + options.refreshToken.maxAge * 1000);
     return newDate.getTime();
+  };
+
+  const setExp = () => {
+    storage.set(options.expiredStorage, generateExpDate());
   };
 
   const setTokenExpiration = (tokenData: string) => {
@@ -49,12 +53,14 @@ export const createAuth: AuthFunction = <S = {auth: AuthState}>(
         if (decoded.exp) {
           storage.set(options.expiredStorage, decoded.exp);
           return decoded;
+        } else {
+          setExp();
         }
       } catch {
-        return null;
+        setExp();
       }
     } else {
-      storage.set(options.expiredStorage, generateExpDate());
+      setExp();
     }
   };
 
@@ -66,23 +72,26 @@ export const createAuth: AuthFunction = <S = {auth: AuthState}>(
     return Promise.resolve(true);
   };
 
-  const logout = async () => {
+  const logout = async <T = Record<string, any>>(payload?: T) => {
+    loading.value = true;
+
     if (options.endpoints.logout) {
       try {
-        loading.value = true;
-        const {data} = await axios!.request(merge(options.endpoints.logout));
-        loading.value = false;
+        const {data} = await axios.request(
+          merge(options.endpoints.logout, {
+            data: payload,
+          }),
+        );
 
         await forceLogout();
 
-        store!.commit('auth/logout');
-
         return data;
       } catch (e: any) {
-        loading.value = false;
         error.value = e.response?.data?.message || e.message;
 
         return e.response;
+      } finally {
+        loading.value = false;
       }
     } else {
       return await forceLogout();
@@ -128,6 +137,8 @@ export const createAuth: AuthFunction = <S = {auth: AuthState}>(
       const tokenData = get(res.data, options.token.property);
       setToken(tokenData);
 
+      setRefreshTokenData(res.data);
+
       if (options.user.autoFetch) {
         setTokenHeader(tokenData);
         await fetchUser();
@@ -143,12 +154,13 @@ export const createAuth: AuthFunction = <S = {auth: AuthState}>(
         return res;
       }
 
-      setRefreshTokenData(res.data);
-
       return res;
     } catch (e: any) {
       if (e.response) {
-        error.value = e.response?.data?.message || e.message;
+        error.value =
+          e.response?.data?.message ||
+          e.response?.data?.error?.message ||
+          e.message;
       } else {
         error.value = e.message;
       }

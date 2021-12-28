@@ -10,24 +10,34 @@ export const registerAxiosInterceptors = (
   options: AuthOptions,
   router: Router,
 ) => {
+  const storage = useStorage(options.storage.driver);
+  const {setToken, getRefreshToken, setTokenHeader, forceLogout} = createAuth(
+    options,
+    store,
+    router,
+    axios,
+  );
+
+  const getAccessToken = () => {
+    return storage.get(options.token.storageName);
+  };
+
   axios.interceptors.request.use(
-    async (config) => {
-      const storage = useStorage(options.storage.driver);
-      const token = storage.get(options.token.storageName);
+    (config) => {
+      const token = getAccessToken();
 
       if (token && config.headers) {
         config.headers[options.token.name] = `${options.token.type} ${token}`;
       }
-
       return config;
     },
-    function (error) {
-      return Promise.reject(error);
+    (error) => {
+      Promise.reject(error);
     },
   );
 
   axios.interceptors.response.use(
-    function (response) {
+    (response) => {
       return response;
     },
     function (error) {
@@ -36,6 +46,35 @@ export const registerAxiosInterceptors = (
       } else {
         return Promise.reject(error);
       }
+
+      const isLogin =
+        originalRequestUrl === normalizeURL(options.endpoints.login.url!);
+      if (
+        error.response.status === 401 &&
+        !originalRequest._retry &&
+        options.refreshToken.enabled &&
+        !isLogin
+      ) {
+        originalRequest._retry = true;
+
+        return axios
+          .request({
+            ...options.endpoints.refresh,
+            data: {
+              [options.refreshToken.name]: getRefreshToken(),
+            },
+          })
+          .then((res) => {
+            if (res.status === 200) {
+              const newToken = get(res.data, options.token.property);
+              setToken(newToken);
+              setTokenHeader(newToken);
+              return axios(originalRequest);
+            }
+          });
+      }
+
+      return Promise.reject(error);
     },
   );
 };

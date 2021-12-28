@@ -1,4 +1,4 @@
-import {AuthStorage, AuthOptions} from '../../types/index';
+import {AuthStorage, AuthOptions} from '../types/index';
 import Cookies from 'js-cookie';
 
 export class CookieStorage implements AuthStorage {
@@ -23,5 +23,6 @@ export class CookieStorage implements AuthStorage {
     Cookies.remove(options?.token?.storageName!, options?.cookie);
     Cookies.remove(options?.user?.storageName!, options?.cookie);
     Cookies.remove(options?.expiredStorage!, options?.cookie);
+    Cookies.remove(options?.refreshToken.storageName!, options?.cookie);
   }
 }

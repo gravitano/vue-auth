@@ -10,19 +10,19 @@ export default defineConfig({
       name: 'VAuth',
       formats: ['es', 'umd', 'iife'],
     },
-    // rollupOptions: {
-    //   plugins: [
-    //     {
-    //       name: 'remove-collection-handlers',
-    //       transform(code, id) {
-    //         if (id.endsWith('reactivity.esm-bundler.js')) {
-    //           return code
-    //             .replace(`mutableCollectionHandlers,`, `null,`)
-    //             .replace(`readonlyCollectionHandlers,`, `null,`);
-    //         }
-    //       },
-    //     },
-    //   ],
-    // },
+    rollupOptions: {
+      plugins: [
+        {
+          name: 'remove-collection-handlers',
+          transform(code, id) {
+            if (id.endsWith('reactivity.esm-bundler.js')) {
+              return code
+                .replace(`mutableCollectionHandlers,`, `null,`)
+                .replace(`readonlyCollectionHandlers,`, `null,`);
+            }
+          },
+        },
+      ],
+    },
   },
 });

@@ -1,7 +1,6 @@
-import {ComputedRef, Ref} from 'vue';
+import {Ref} from 'vue';
 import {Store} from 'vuex';
 import {AuthOptions} from './options';
-import {AuthStorage} from './storage';
 import {AxiosInstance} from 'axios';
 import {Router} from 'vue-router';
 
@@ -32,7 +31,7 @@ export type AuthComposition = {
   token: Ref<string>;
   setUser(userData: AuthUser): void;
   setToken(tokenData: string): void;
-  logout(): void;
+  logout<T = Record<string, any>>(payload?: T): void;
   loginAs<U = AuthUser>(user: U, token: string): Promise<AuthResponse<U>>;
   login<P = LoginPayload>(payload: P): Promise<any>;
   forceLogout(): void;
@@ -51,5 +50,3 @@ export type AuthFunction = (
   router: Router,
   axios: AxiosInstance,
 ) => AuthComposition;
-
-export const createAuth: AuthFunction;
