@@ -1,5 +1,5 @@
 import {inject, App} from 'vue';
-import {createAuth} from './auth';
+import {createAuth} from './vuex-auth';
 import merge from 'lodash/merge';
 import {AuthFunction, AuthOptions} from './types/index';
 import {Store} from 'vuex';
@@ -19,10 +19,15 @@ export const injectAuth = (injectKey = 'auth'): AuthFunction | undefined =>
   inject(injectKey);
 
 export const AuthPlugin = {
-  install: (app: App, {options, axios, router}: UserPlugin<unknown>) => {
+  install: (app: App, {options, axios, router, store}: UserPlugin<unknown>) => {
     axios = axios || defaultAxios;
 
-    const auth = createAuth(merge(defaultOptions, options), router, axios);
+    const auth = createAuth(
+      merge(defaultOptions, options),
+      store,
+      router,
+      axios,
+    );
 
     app.config.globalProperties.$auth = auth;
 
