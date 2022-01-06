@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.8](https://git.gits.id/frontend/starter/vue-3/starter/compare/v0.1.7...v0.1.8) (2022-01-06)
+
+
+### Bug Fixes
+
+* fix types entry point ([d0ca0dc](https://git.gits.id/frontend/starter/vue-3/starter/commit/d0ca0dc36106fa88166e2bc4d1bcc48674f72a53))
+
 ### [0.1.7](https://git.gits.id/frontend/starter/vue-3/starter/compare/v0.0.2-alpha.1...v0.1.7) (2022-01-06)
 
 
