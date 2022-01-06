@@ -1,26 +1,19 @@
-import {AuthState} from './module';
+import {normalizeURL} from './../utils';
+import {StoreDefinition} from 'pinia';
 import {AxiosInstance} from 'axios';
-import {Router} from 'vue-router';
-import {AuthOptions} from './types/index';
-import {useStorage} from './storage';
-import {Store} from 'vuex';
-import {createAuth} from './vuex-auth';
+import {AuthOptions} from '../types/index';
+import {useStorage} from '../storage';
 import get from 'lodash/get';
-import {normalizeURL} from './utils';
+import {Router} from 'vue-router';
 
-export const registerAxiosInterceptors = <S = AuthState>(
+export const registerPiniaAxiosInterceptors = (
   axios: AxiosInstance,
   options: AuthOptions,
-  store: Store<S>,
   router: Router,
+  useAuth: StoreDefinition,
 ) => {
   const storage = useStorage(options.storage.driver);
-  const {setToken, getRefreshToken, setTokenHeader, forceLogout} = createAuth(
-    options,
-    store,
-    router,
-    axios,
-  );
+  const auth = useAuth();
 
   const getAccessToken = () => {
     return storage.get(options.token.storageName);
@@ -55,7 +48,7 @@ export const registerAxiosInterceptors = <S = AuthState>(
         originalRequestUrl === refreshTokenUrl &&
         options.refreshToken.autoLogout
       ) {
-        forceLogout();
+        auth.forceLogout();
         router.push({
           path: options.redirect.login,
           query: {
@@ -79,14 +72,14 @@ export const registerAxiosInterceptors = <S = AuthState>(
           .request({
             ...options.endpoints.refresh,
             data: {
-              [options.refreshToken.name]: getRefreshToken(),
+              [options.refreshToken.name]: auth.getRefreshToken(),
             },
           })
           .then((res) => {
             if (res.status === 200) {
               const newToken = get(res.data, options.token.property);
-              setToken(newToken);
-              setTokenHeader(newToken);
+              auth.setToken(newToken);
+              auth.setTokenHeader(newToken);
               return axios(originalRequest);
             }
           });
