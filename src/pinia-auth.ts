@@ -9,7 +9,7 @@ import {ref, computed} from 'vue';
 import {Router} from 'vue-router';
 import {AxiosInstance} from 'axios';
 
-export const createAuth = (
+export const createPiniaAuth = (
   options: AuthOptions,
   router: Router,
   axios: AxiosInstance,

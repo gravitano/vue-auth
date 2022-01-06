@@ -50,3 +50,10 @@ export type AuthFunction = (
   router: Router,
   axios: AxiosInstance,
 ) => AuthComposition;
+
+export type AuthFunctionVuex = <S>(
+  options: AuthOptions,
+  store: Store<S>,
+  router: Router,
+  axios: AxiosInstance,
+) => AuthComposition;

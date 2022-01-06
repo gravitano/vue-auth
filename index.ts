@@ -1,5 +1,6 @@
 export * from './src/storage';
-export * from './src/auth';
+export * from './src/pinia-auth';
+export * from './src/vuex-auth';
 export * from './src/axios-interceptors';
 export * from './src/plugin';
 export * from './src/module';
