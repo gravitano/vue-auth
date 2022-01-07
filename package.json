@@ -9,9 +9,7 @@
     "src": "src"
   },
   "files": [
-    "index.ts",
     "src",
-    "types",
     "dist"
   ],
   "scripts": {
