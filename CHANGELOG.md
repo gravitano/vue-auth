@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.9](https://github.com/pinteraktif/smart-akmil-web/compare/v0.1.8...v0.1.9) (2022-01-07)
+
+
+### Features
+
+* add pinia dep ([35e9a65](https://github.com/pinteraktif/smart-akmil-web/commit/35e9a659aa35b390a61e57780048b4990853a4c2))
+* export utils ([723553b](https://github.com/pinteraktif/smart-akmil-web/commit/723553beb47c7717c8fff99397bb5d95b0ef2486))
+
 ### [0.1.8](https://git.gits.id/frontend/starter/vue-3/starter/compare/v0.1.7...v0.1.8) (2022-01-06)
 
 
