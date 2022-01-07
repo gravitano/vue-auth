@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.13](https://github.com/pinteraktif/smart-akmil-web/compare/v0.1.12...v0.1.13) (2022-01-07)
+
+
+### Features
+
+* ship es and other formats ([1031145](https://github.com/pinteraktif/smart-akmil-web/commit/1031145f2ba6db86d1a909056d7f7d21ab37bd4c))
+
 ### [0.1.12](https://github.com/pinteraktif/smart-akmil-web/compare/v0.1.11...v0.1.12) (2022-01-07)
 
 ### [0.1.11](https://github.com/pinteraktif/smart-akmil-web/compare/v0.1.10...v0.1.11) (2022-01-07)
