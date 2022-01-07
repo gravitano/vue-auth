@@ -17,7 +17,7 @@
   "scripts": {
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
     "test": "echo \"Error: run tests from root\" && exit 1",
-    "build": "vite build && tsc --emitDeclarationOnly && mv dist/src dist/types",
+    "build": "vite build && tsc --emitDeclarationOnly",
     "prepublishOnly": "npm run build",
     "release": "standard-version"
   },
@@ -37,5 +37,5 @@
     "vite": "^2.6.13"
   },
   "main": "src/index.ts",
-  "types": "./dist/types/index.d.ts"
+  "types": "./dist/src/index.d.ts"
 }
