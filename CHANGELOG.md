@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.15](https://github.com/gravitano/vue-auth/compare/v0.1.13...v0.1.15) (2022-03-22)
+
+
+### Bug Fixes
+
+* improve typings ([df85ec1](https://github.com/gravitano/vue-auth/commit/df85ec1342e18e2581449b9ee5ee0ed9306116c0))
+* pass auth options when saving state to storage ([e68b5ec](https://github.com/gravitano/vue-auth/commit/e68b5ec0aeae4221a39d8fbecb40d9682d8085ec))
+
 ### [0.1.14](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/compare/v0.0.2-alpha.1...v0.1.14) (2022-01-11)
 
 
