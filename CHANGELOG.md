@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.16](https://github.com/gravitano/vue-auth/compare/v0.1.15...v0.1.16) (2022-03-22)
+
+
+### Bug Fixes
+
+* add `AxiosStatic` type ([efd5568](https://github.com/gravitano/vue-auth/commit/efd55689e70f76af41f92bf788f8b9e27b01e73f))
+
 ### [0.1.15](https://github.com/gravitano/vue-auth/compare/v0.1.13...v0.1.15) (2022-03-22)
 
 
