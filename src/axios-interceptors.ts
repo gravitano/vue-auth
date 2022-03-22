@@ -1,5 +1,5 @@
 import {AuthState} from './module';
-import {AxiosInstance} from 'axios';
+import {AxiosInstance, AxiosStatic} from 'axios';
 import {Router} from 'vue-router';
 import {AuthOptions} from './types/index';
 import {useStorage} from './storage';
@@ -9,7 +9,7 @@ import get from 'lodash/get';
 import {normalizeURL} from './utils';
 
 export const registerAxiosInterceptors = <S = AuthState>(
-  axios: AxiosInstance,
+  axios: AxiosInstance | AxiosStatic,
   options: AuthOptions,
   store: Store<S>,
   router: Router,
