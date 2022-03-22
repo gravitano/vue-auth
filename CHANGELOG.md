@@ -2,6 +2,90 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.14](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/compare/v0.0.2-alpha.1...v0.1.14) (2022-01-11)
+
+
+### ⚠ BREAKING CHANGES
+
+* merge from github
+* remove unused scripts
+
+### Features
+
+* add `standard-version` ([04bcc06](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/04bcc06416c3b96b03d166becd8d4efc1d4e9baa))
+* add axios interceptors for pinia ([8778d18](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/8778d18b7b7858aa96241bbc695b56b55a6a5166))
+* add custom vue properties definition ([759bf84](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/759bf84c416177aa3fdb6b0ef0b6b643b2b2301a))
+* add pinia dep ([35e9a65](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/35e9a659aa35b390a61e57780048b4990853a4c2))
+* add prepublishOnly scripts ([0a497bd](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/0a497bdc1027b5dec5a5497638a846ced823d943))
+* add support for refresh token ([1ce0936](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/1ce0936f879bc9bc57734dd3636c716c670358e0))
+* added auth middleware ([8775609](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/8775609d2ee1bb9af0a9bb4cc33bf06b83a697b2))
+* allow to send extra payload to logout method ([c875622](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/c875622bbccccc275ab6471e386090b863706a54))
+* allow to set cookie options ([7ff562a](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/7ff562ab182032f1cef4412b0c8041022e83d66d))
+* build and add dist ([a95dab1](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/a95dab1353155ae26dabce547f643f24961c9b12))
+* configurable auth storage via auth options `storage.driver` ([cda7f3d](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/cda7f3d7cde0ba0fd6ecd17e791d56d3b95a3cea))
+* export src/tyles ([ea8588c](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/ea8588c411b1510c4c0bb9138765feef4168c640))
+* export utils ([723553b](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/723553beb47c7717c8fff99397bb5d95b0ef2486))
+* improved error handling ([59a6d76](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/59a6d76d902249210dc9bb5737ba71f5f1acd8dc))
+* improved refresh token logic ([c4b36ae](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/c4b36ae79396a36506cb83afad09a559ec753dc0))
+* improved typing ([d7ea3ed](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/d7ea3ed643f2b3cbb4d3b08b3135568fd62ac4bd))
+* **local storage:** always stringify the local storage value ([d7acd3e](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/d7acd3e17c0ca393c0aca0ea78164272d1a8120d))
+* new `getToken` flow ([ed2a3c4](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/ed2a3c4e77102c6cfcf4f04035f122c5620288b8))
+* new `getUser` function ([4953c83](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/4953c834b883b720de48fc26a349337423e74f9e))
+* new composition method `loginAs` for simulating login user ([2bec70c](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/2bec70c9e738ae3447bad31d7762501fdf970047))
+* new refresh token option: `autoLogout`. ([df46398](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/df463986dc0df07e08949da320ba17110e2f223a))
+* new storage driver `cookie` ([ea1ee09](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/ea1ee096d747cb7a0f21e74a8eb63734a5a64d1d))
+* pull origin ([6cb6c34](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/6cb6c34546af488c188bbe2232f7bcf1e917e8fd))
+* remove .npmrc file ([66a9156](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/66a9156474bf30db647d5a77d5067feb3f9c88d0))
+* revert back vuex composition auth ([44d9c90](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/44d9c90952e46860a3dec64a3fe3b8fcd8ad6ed5))
+* ship es and other formats ([1031145](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/1031145f2ba6db86d1a909056d7f7d21ab37bd4c))
+* simplify the `authModule` ([5752e0a](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/5752e0a0487f70cebb750117628cf71243b88591))
+* **types:** set default types for login payload ([a65682d](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/a65682d8cebee587194897f875877df77ae43cc8))
+* update `registerAxiosInterceptors` function ([6431ab9](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/6431ab989daf05834e6efed78bbdcc2f94eca80b))
+* update readme ([5518a8d](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/5518a8dbd47335f6f4dff18a89d720ab18a4a167))
+* wip new refresh token ([5e24ec0](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/5e24ec0fc690de88d48f403f7d75a1942e2548e2))
+
+
+### Bug Fixes
+
+* clear refresh token storage ([94b6547](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/94b654745c621a1c85367a351a074cb755973856))
+* clear token data when logout ([492f1bf](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/492f1bfc243e48b3cce6ce57953943e4c4e61faf))
+* disable refresh token when error from login page ([cb8af87](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/cb8af8762f4983cb86e4a057ae8421552c09261f))
+* exp date calculation ([713cf55](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/713cf5563bf3ba7e7041a2b60041affef80519ad))
+* fix types entry point ([d0ca0dc](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/d0ca0dc36106fa88166e2bc4d1bcc48674f72a53))
+* force logout ([0936da9](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/0936da969ac0adcf5cc0b547ced930fde40ba56d))
+* force logout user when failed to refresh token ([5b268d2](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/5b268d2d586ca721f7e6bd9a6dd67d05d8362c18))
+* handle error on secureLs ([77296eb](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/77296eb0eca9970c0b958c95c5387763a5405f96))
+* handle redirect when refresh token failed ([3df9ade](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/3df9ade28db3af5cd57eeabd54fa06cb79e9134c))
+* improve typings ([df85ec1](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/df85ec1342e18e2581449b9ee5ee0ed9306116c0))
+* missing types ([4c303b3](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/4c303b33e3b57cc67d83aa57a47c0da494ebb170))
+* no console ([62f627a](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/62f627a1fc02151fb52f6d8dc435d45b59350493))
+* plugin registration ([869c754](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/869c754c3edb2f51d1ef37a3772e5b4f43815a51))
+* plugin registration ([d31d998](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/d31d998d82820be7686e311d284ff640b1db2a76))
+* refresh token flow and maxAge ([f106fd2](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/f106fd2982424abd56e5f7e3c290d9fbadb870a2))
+* refresh token infinite loop ([c172253](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/c1722530922b0535b9e5c118c17a25cf9538f7cf))
+* reject request when not refreshing token ([3df032f](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/3df032fe51f72aa9617137b2c1c6a17e3276ef47))
+* remove mv scripts and change types path ([437e12c](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/437e12cd9152dd5357dffffced970034b2781fce))
+* replace getters with state ([fa45f4d](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/fa45f4d65a504accb69af8d85ebe7ab9b9f685d5))
+* require lodash ([19227a8](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/19227a8ec6fffea6a7bada9a583bafd8f5f9d87e))
+* return router and fix infinite catch looping ([428cee3](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/428cee344eb772959a3dc2876a1208a5e098d304))
+* return some new function ([856d140](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/856d1409986db6581342150310871998ae1846db))
+* rework login flow ([72116c9](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/72116c957180b8f7c33600c28968e30c880e3685))
+* rework refresh token flow ([5ea1cd2](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/5ea1cd27959a44cb920236c6b80ae8afcfabfea5))
+* rework refresh token flow ([f33fed9](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/f33fed9f42b7dcf1f26a8ff69ec495ac54c9f95e))
+* type path ([0083f54](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/0083f545e37b344eca928e04ffd312d41f687846))
+* types ([146828f](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/146828f6774196fdae738ec2c5dee6bd11171039))
+* types ([841a916](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/841a91689c4eb54550b270c125d2e0ff8937b718))
+* typing ([5ea80b3](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/5ea80b3434bbaa4a3280ffbcfecd2cbb1035ee22))
+* update axios interceptors ([65efaf9](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/65efaf943734685ac47cd6926368b19bed577a55))
+* update lock file ([a3846b1](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/a3846b12b7a23063b2ebf0e819cdab69d04fae30))
+* update plugin registration ([08274cd](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/08274cd9044460ab1a17dba31cbe9b22c4c86e3e))
+* update plugin registration ([284e73e](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/284e73e8b2a72dd76d02788114102936c3f10a02))
+* uses index.ts as main entry point for now ([475c820](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/475c820036b01e239db851bf2c09dacf554db8f8))
+
+
+* merge from github ([94cbe37](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/94cbe377748ac33909f131b836f05db4b27edee1))
+* remove unused scripts ([ebd3938](https://gitlab.com/wartek-id/belajar-id/belajar.id-cms/commit/ebd393848ea7229edfc77ea9089ed0e396a79630))
+
 ### [0.1.13](https://github.com/pinteraktif/smart-akmil-web/compare/v0.1.12...v0.1.13) (2022-01-07)
 
 

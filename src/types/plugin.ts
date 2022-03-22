@@ -43,6 +43,17 @@ export type AuthComposition = {
   getToken: () => Promise<string>;
   getRefreshToken: () => string;
   getLocalUser(): AuthUser;
+  getFreshToken(): void;
+  isExpired(): boolean;
+  setTokenExpiration(tokenData: string):
+    | {
+        user?: AuthUser | undefined;
+        exp: number;
+      }
+    | undefined;
+  handleRefreshTokenFailed(e?: any): any;
+  getTokenExpirationTime(): number;
+  setRefreshTokenData(data: any): void;
 };
 
 export type AuthFunction = (
