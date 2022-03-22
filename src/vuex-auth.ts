@@ -23,12 +23,12 @@ export const createAuth: AuthFunctionVuex = <S = {auth: AuthState}>(
   const loading = ref(false);
 
   const setUser = (userData: AuthUser) => {
-    storage.set(options.user.storageName, userData);
+    storage.set(options.user.storageName, userData, options);
     store.commit('auth/setUser', userData);
   };
 
   const setToken = (tokenData: string) => {
-    storage.set(options.token.storageName, tokenData);
+    storage.set(options.token.storageName, tokenData, options);
     store.commit('auth/setToken', tokenData);
 
     setTokenExpiration(tokenData);
@@ -42,7 +42,7 @@ export const createAuth: AuthFunctionVuex = <S = {auth: AuthState}>(
   };
 
   const setExp = () => {
-    storage.set(options.expiredStorage, generateExpDate());
+    storage.set(options.expiredStorage, generateExpDate(), options);
   };
 
   const setTokenExpiration = (tokenData: string) => {
@@ -51,7 +51,7 @@ export const createAuth: AuthFunctionVuex = <S = {auth: AuthState}>(
         const decoded = jwtDecode<{user?: AuthUser; exp: number}>(tokenData);
 
         if (decoded.exp) {
-          storage.set(options.expiredStorage, decoded.exp);
+          storage.set(options.expiredStorage, decoded.exp, options);
           return decoded;
         } else {
           setExp();
@@ -174,7 +174,7 @@ export const createAuth: AuthFunctionVuex = <S = {auth: AuthState}>(
   const setRefreshTokenData = (data: any) => {
     if (options.refreshToken.enabled) {
       const refreshToken = get(data, options.refreshToken.property);
-      storage.set(options.refreshToken.storageName, refreshToken);
+      storage.set(options.refreshToken.storageName, refreshToken, options);
     }
   };
 
@@ -209,7 +209,7 @@ export const createAuth: AuthFunctionVuex = <S = {auth: AuthState}>(
   };
 
   const setRefreshToken = (token: string) => {
-    storage.set(options.refreshToken.storageName, token);
+    storage.set(options.refreshToken.storageName, token, options);
   };
 
   const getRefreshToken = () => {
