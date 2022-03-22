@@ -11,6 +11,29 @@ export default defineConfig({
       formats: ['es', 'umd', 'iife'],
     },
     rollupOptions: {
+      // make sure to externalize deps that shouldn't be bundled
+      // into your library
+      external: [
+        'vue',
+        'vuex',
+        'vue-router',
+        'axios',
+        'pinia',
+        'lodash',
+        'secure-ls',
+        'jwt-decode',
+        'js-cookie',
+      ],
+      output: {
+        // Provide global variables to use in the UMD build
+        // for externalized deps
+        globals: {
+          vue: 'Vue',
+        },
+      },
+      resolve: {
+        dedupe: ['vue', 'vue-router'],
+      },
       plugins: [
         {
           name: 'remove-collection-handlers',
