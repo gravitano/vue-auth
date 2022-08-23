@@ -8,7 +8,7 @@ export default defineConfig({
     lib: {
       entry: resolve(__dirname, 'src/index.ts'),
       name: 'VAuth',
-      formats: ['es', 'umd', 'iife'],
+      formats: ['es', 'cjs', 'iife', 'umd'],
     },
     rollupOptions: {
       // make sure to externalize deps that shouldn't be bundled
@@ -19,7 +19,8 @@ export default defineConfig({
         'vue-router',
         'axios',
         'pinia',
-        'lodash',
+        'lodash.get',
+        'lodash.merge',
         'secure-ls',
         'jwt-decode',
         'js-cookie',
@@ -31,21 +32,6 @@ export default defineConfig({
           vue: 'Vue',
         },
       },
-      resolve: {
-        dedupe: ['vue', 'vue-router'],
-      },
-      plugins: [
-        {
-          name: 'remove-collection-handlers',
-          transform(code, id) {
-            if (id.endsWith('reactivity.esm-bundler.js')) {
-              return code
-                .replace(`mutableCollectionHandlers,`, `null,`)
-                .replace(`readonlyCollectionHandlers,`, `null,`);
-            }
-          },
-        },
-      ],
     },
   },
 });

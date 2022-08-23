@@ -3,7 +3,7 @@ import {StoreDefinition} from 'pinia';
 import {AxiosInstance} from 'axios';
 import {AuthOptions} from '../types/index';
 import {useStorage} from '../storage';
-import get from 'lodash/get';
+import get from 'lodash.get';
 import {Router} from 'vue-router';
 
 export const registerPiniaAxiosInterceptors = (

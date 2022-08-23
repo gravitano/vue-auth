@@ -1,7 +1,7 @@
 import {computed, ref} from 'vue';
 import {AxiosInstance} from 'axios';
-import merge from 'lodash/merge';
-import get from 'lodash/get';
+import merge from 'lodash.merge';
+import get from 'lodash.get';
 import jwtDecode from 'jwt-decode';
 import {AuthFunctionVuex, AuthUser, LoginPayload} from './types/index';
 import {Store} from 'vuex';

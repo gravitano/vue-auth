@@ -17,32 +17,35 @@
     "release": "standard-version"
   },
   "dependencies": {
-    "axios": "^0.26.1",
+    "axios": "^0.27.2",
     "js-cookie": "^3.0.1",
     "jwt-decode": "^3.1.2",
-    "lodash": "^4.17.21",
-    "pinia": "^2.0.12",
+    "lodash.get": "^4.4.2",
+    "lodash.merge": "^4.6.2",
+    "pinia": "^2.0.20",
     "secure-ls": "^1.2.6",
-    "vue": "^3.2.31",
-    "vue-router": "^4.0.14",
+    "vue": "^3.2.37",
+    "vue-router": "^4.1.4",
     "vuex": "^4.0.2"
   },
   "gitHead": "a3873617b764442416da0687a66a7ba20638c7cb",
   "devDependencies": {
-    "@types/js-cookie": "^3.0.1",
-    "@types/lodash": "^4.14.180",
-    "standard-version": "^9.3.2",
-    "typescript": "^4.6.2",
-    "vite": "^2.8.6"
+    "@types/js-cookie": "^3.0.2",
+    "@types/lodash": "^4.14.184",
+    "@types/lodash.get": "^4.4.7",
+    "@types/lodash.merge": "^4.6.7",
+    "standard-version": "^9.5.0",
+    "typescript": "^4.7.4",
+    "vite": "^3.0.9"
   },
-  "main": "dist/vue-auth.umd.js",
-  "unpkg": "dist/vue-auth.iife.js",
-  "jsdelivr": "dist/vue-auth.iife.js",
-  "module": "./dist/vue-auth.es.js",
+  "main": "./dist/vue-auth.js",
+  "unpkg": "./dist/vue-auth.iife.js",
+  "jsdelivr": "./dist/vue-auth.iife.js",
+  "module": "./dist/vue-auth.mjs",
   "exports": {
     ".": {
-      "import": "./dist/vue-auth.es.js",
-      "require": "./dist/vue-auth.umd.js"
+      "import": "./dist/vue-auth.mjs",
+      "require": "./dist/vue-auth.js"
     }
   },
   "types": "./dist/types/index.d.ts"

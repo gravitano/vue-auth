@@ -5,7 +5,7 @@ import {AuthOptions} from './types/index';
 import {useStorage} from './storage';
 import {Store} from 'vuex';
 import {createAuth} from './vuex-auth';
-import get from 'lodash/get';
+import get from 'lodash.get';
 import {normalizeURL} from './utils';
 
 export const registerAxiosInterceptors = <S = AuthState>(
