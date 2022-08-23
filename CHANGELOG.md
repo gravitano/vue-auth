@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0](https://github.com/gravitano/vue-auth/compare/v0.1.16...v0.2.0) (2022-08-23)
+
+
+### Features
+
+* vite 3 and improve lodash ([497a10c](https://github.com/gravitano/vue-auth/commit/497a10c5da94fccdc72d36b1e62cd15a750257fe))
+
 ### [0.1.16](https://github.com/gravitano/vue-auth/compare/v0.1.15...v0.1.16) (2022-03-22)
 
 
